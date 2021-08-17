@@ -1,0 +1,12 @@
+# python file
+__pycache__
+.ipynb_checkpoints
+
+# data
+data/
+Datasets/
+dataset/
+.zip
+.pickle
+.hdf5
+refModel/
