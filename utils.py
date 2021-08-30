@@ -90,14 +90,9 @@ class Trie(object):
 
 
 # for protein search
-def make_tree(peptides):
+def tree_from_pep(peptides):
     pep_tree = KeywordTree(case_insensitive=True)
     for pep in peptides:
         pep_tree.add(pep)
     pep_tree.finalize()
     return pep_tree
-
-
-
-        
-        
