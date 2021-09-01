@@ -1,0 +1,554 @@
+epoch: 1, loss: 182.14315, loss1: 2.93947, loss2_3: 179.20369
+	train_acc: 0.5345, test_acc: [31m0.5384[0m, time: 35.67
+epoch: 1, loss: 180.92484, loss1: 2.75206, loss2_3: 178.17278
+	train_acc: 0.5378, test_acc: [31m0.53325[0m, time: 35.59
+epoch: 2, loss: 167.54081, loss1: 1.01573, loss2_3: 166.52508
+	train_acc: 0.6896, test_acc: [31m0.69005[0m, time: 36.13
+epoch: 3, loss: 141.53972, loss1: 0.98657, loss2_3: 140.55315
+	train_acc: 0.7384, test_acc: [31m0.74085[0m, time: 36.17
+epoch: 4, loss: 134.58944, loss1: 0.95997, loss2_3: 133.62947
+	train_acc: 0.7360, test_acc: [31m0.7368[0m, time: 36.34
+epoch: 5, loss: 131.80626, loss1: 0.94767, loss2_3: 130.85860
+	train_acc: 0.7585, test_acc: [31m0.76205[0m, time: 36.31
+epoch: 6, loss: 129.77865, loss1: 0.94217, loss2_3: 128.83648
+	train_acc: 0.7553, test_acc: [31m0.7545[0m, time: 36.36
+epoch: 7, loss: 128.78937, loss1: 0.93427, loss2_3: 127.85510
+	train_acc: 0.7644, test_acc: [31m0.76335[0m, time: 36.30
+epoch: 8, loss: 127.05748, loss1: 0.93125, loss2_3: 126.12623
+	train_acc: 0.7720, test_acc: [31m0.77215[0m, time: 36.39
+epoch: 9, loss: 126.54026, loss1: 0.91956, loss2_3: 125.62070
+	train_acc: 0.7632, test_acc: [31m0.76375[0m, time: 36.24
+epoch: 10, loss: 125.79661, loss1: 0.91716, loss2_3: 124.87945
+	train_acc: 0.7713, test_acc: [31m0.7718[0m, time: 36.42
+epoch: 1, loss: 179.71063, loss1: 2.69043, loss2_3: 177.02020
+	train_acc: 0.5572, test_acc: [31m0.55465[0m, time: 36.27
+epoch: 2, loss: 172.01196, loss1: 1.02064, loss2_3: 170.99132
+	train_acc: 0.6505, test_acc: [31m0.64335[0m, time: 36.45
+epoch: 3, loss: 150.97436, loss1: 1.00542, loss2_3: 149.96894
+	train_acc: 0.7311, test_acc: [31m0.72985[0m, time: 36.29
+epoch: 4, loss: 136.34876, loss1: 0.96815, loss2_3: 135.38060
+	train_acc: 0.7440, test_acc: [31m0.7442[0m, time: 36.38
+epoch: 5, loss: 132.28396, loss1: 0.95060, loss2_3: 131.33336
+	train_acc: 0.7509, test_acc: [31m0.7512[0m, time: 36.35
+epoch: 6, loss: 129.97794, loss1: 0.94204, loss2_3: 129.03590
+	train_acc: 0.7652, test_acc: [31m0.76575[0m, time: 36.37
+epoch: 1, loss: 181.73344, loss1: 2.59739, loss2_3: 179.13606
+	train_acc: 0.5578, test_acc: [31m0.5561[0m, time: 36.31
+epoch: 2, loss: 175.95414, loss1: 1.02178, loss2_3: 174.93236
+	train_acc: 0.5487, test_acc: [31m0.54865[0m, time: 36.38
+epoch: 3, loss: 174.22681, loss1: 1.02853, loss2_3: 173.19829
+	train_acc: 0.5860, test_acc: [31m0.58595[0m, time: 36.33
+epoch: 4, loss: 162.11159, loss1: 1.02037, loss2_3: 161.09122
+	train_acc: 0.6842, test_acc: [31m0.68805[0m, time: 36.34
+epoch: 5, loss: 138.78763, loss1: 0.98040, loss2_3: 137.80723
+	train_acc: 0.7542, test_acc: [31m0.75475[0m, time: 36.39
+epoch: 1, loss: 181.11985, loss1: 2.38522, loss2_3: 178.73463
+	train_acc: 0.5336, test_acc: [31m0.5331[0m, time: 36.31
+epoch: 2, loss: 176.11953, loss1: 1.02278, loss2_3: 175.09675
+	train_acc: 0.5570, test_acc: [31m0.5606[0m, time: 36.32
+epoch: 3, loss: 159.19088, loss1: 1.01531, loss2_3: 158.17557
+	train_acc: 0.7211, test_acc: [31m0.72255[0m, time: 36.32
+epoch: 4, loss: 138.65569, loss1: 0.98186, loss2_3: 137.67383
+	train_acc: 0.7479, test_acc: [31m0.7491[0m, time: 36.35
+epoch: 5, loss: 133.79938, loss1: 0.95522, loss2_3: 132.84416
+	train_acc: 0.7479, test_acc: [31m0.7467[0m, time: 36.36
+epoch: 1, loss: 157.79544, loss1: 1.45590, loss2_3: 156.33954
+	train_acc: 0.7599, test_acc: [31m0.7590549426055946[0m, time: 64.05
+epoch: 2, loss: 124.56889, loss1: 0.92612, loss2_3: 123.64277
+	train_acc: 0.7897, test_acc: [31m0.7894795497603923[0m, time: 63.93
+epoch: 3, loss: 118.81992, loss1: 0.90422, loss2_3: 117.91570
+	train_acc: 0.7891, test_acc: [31m0.7878450165310747[0m, time: 65.07
+epoch: 4, loss: 115.51865, loss1: 0.88433, loss2_3: 114.63432
+	train_acc: 0.7891, test_acc: [31m0.7902225194100821[0m, time: 64.20
+epoch: 5, loss: 114.16350, loss1: 0.87263, loss2_3: 113.29087
+	train_acc: 0.7854, test_acc: [31m0.7858018499944277[0m, time: 63.56
+epoch: 6, loss: 111.80736, loss1: 0.86087, loss2_3: 110.94649
+	train_acc: 0.8099, test_acc: [31m0.8092611166833835[0m, time: 64.21
+epoch: 7, loss: 109.85247, loss1: 0.84179, loss2_3: 109.01068
+	train_acc: 0.8106, test_acc: [31m0.8107099075002786[0m, time: 63.84
+epoch: 8, loss: 109.44311, loss1: 0.83591, loss2_3: 108.60720
+	train_acc: 0.8121, test_acc: [31m0.8101155317805268[0m, time: 63.35
+epoch: 9, loss: 108.64083, loss1: 0.83127, loss2_3: 107.80956
+	train_acc: 0.8157, test_acc: [31m0.8125859058657454[0m, time: 63.35
+epoch: 10, loss: 107.68807, loss1: 0.82630, loss2_3: 106.86178
+	train_acc: 0.8129, test_acc: [31m0.8102269772279802[0m, time: 64.41
+epoch: 11, loss: 106.59012, loss1: 0.81937, loss2_3: 105.77074
+	train_acc: 0.8102, test_acc: [31m0.8079423455551841[0m, time: 63.33
+epoch: 12, loss: 106.29528, loss1: 0.81450, loss2_3: 105.48077
+	train_acc: 0.8202, test_acc: [31m0.8178795646197853[0m, time: 63.95
+epoch: 13, loss: 105.69258, loss1: 0.81075, loss2_3: 104.88183
+	train_acc: 0.8216, test_acc: [31m0.8202199190163082[0m, time: 63.72
+epoch: 14, loss: 105.56074, loss1: 0.80635, loss2_3: 104.75439
+	train_acc: 0.8208, test_acc: [31m0.8203313644637616[0m, time: 63.49
+epoch: 15, loss: 104.82173, loss1: 0.80000, loss2_3: 104.02173
+	train_acc: 0.8188, test_acc: [31m0.816876555592704[0m, time: 63.69
+epoch: 16, loss: 104.74118, loss1: 0.79869, loss2_3: 103.94249
+	train_acc: 0.8210, test_acc: [31m0.8181210297559345[0m, time: 64.41
+epoch: 17, loss: 104.40565, loss1: 0.79728, loss2_3: 103.60837
+	train_acc: 0.8226, test_acc: [31m0.8205542553586685[0m, time: 64.14
+epoch: 18, loss: 104.03009, loss1: 0.79043, loss2_3: 103.23965
+	train_acc: 0.8220, test_acc: [31m0.8184925145807794[0m, time: 65.44
+epoch: 19, loss: 103.98417, loss1: 0.79414, loss2_3: 103.19003
+	train_acc: 0.8208, test_acc: [31m0.8181396039971767[0m, time: 64.01
+epoch: 20, loss: 103.31940, loss1: 0.78592, loss2_3: 102.53348
+	train_acc: 0.8170, test_acc: [31m0.8147219436086036[0m, time: 63.62
+epoch: 21, loss: 103.35687, loss1: 0.78521, loss2_3: 102.57166
+	train_acc: 0.8247, test_acc: [31m0.8223373825179241[0m, time: 64.06
+epoch: 22, loss: 102.95613, loss1: 0.78336, loss2_3: 102.17277
+	train_acc: 0.8254, test_acc: [31m0.8229874809614027[0m, time: 64.33
+epoch: 23, loss: 102.85393, loss1: 0.78581, loss2_3: 102.06812
+	train_acc: 0.8255, test_acc: [31m0.8230432036851295[0m, time: 63.83
+epoch: 24, loss: 102.48990, loss1: 0.78079, loss2_3: 101.70910
+	train_acc: 0.8251, test_acc: [31m0.8230246294438872[0m, time: 63.94
+epoch: 25, loss: 102.27278, loss1: 0.77890, loss2_3: 101.49389
+	train_acc: 0.8257, test_acc: [31m0.8235075597161856[0m, time: 63.53
+epoch: 26, loss: 102.25274, loss1: 0.77592, loss2_3: 101.47682
+	train_acc: 0.8278, test_acc: [31m0.8255321520115904[0m, time: 64.22
+epoch: 27, loss: 101.82918, loss1: 0.77328, loss2_3: 101.05590
+	train_acc: 0.8252, test_acc: [31m0.8220587688992904[0m, time: 64.68
+epoch: 28, loss: 101.76433, loss1: 0.77129, loss2_3: 100.99304
+	train_acc: 0.8262, test_acc: [31m0.8243805490545711[0m, time: 63.84
+epoch: 29, loss: 101.33173, loss1: 0.76861, loss2_3: 100.56312
+	train_acc: 0.8241, test_acc: [31m0.8215386901445076[0m, time: 63.98
+epoch: 30, loss: 101.14114, loss1: 0.77040, loss2_3: 100.37074
+	train_acc: 0.8302, test_acc: [31m0.827482447342026[0m, time: 65.00
+epoch: 31, loss: 100.89879, loss1: 0.76650, loss2_3: 100.13229
+	train_acc: 0.8274, test_acc: [31m0.8243991232958133[0m, time: 63.89
+epoch: 32, loss: 100.83164, loss1: 0.76545, loss2_3: 100.06619
+	train_acc: 0.8300, test_acc: [31m0.8276867639956907[0m, time: 63.37
+epoch: 33, loss: 100.61932, loss1: 0.76453, loss2_3: 99.85479
+	train_acc: 0.8285, test_acc: [31m0.8270552397934544[0m, time: 63.67
+epoch: 34, loss: 100.45152, loss1: 0.76553, loss2_3: 99.68599
+	train_acc: 0.8289, test_acc: [31m0.8270180913109699[0m, time: 64.22
+epoch: 35, loss: 100.33909, loss1: 0.76277, loss2_3: 99.57633
+	train_acc: 0.8255, test_acc: [31m0.8233403915450054[0m, time: 63.94
+epoch: 36, loss: 100.12471, loss1: 0.75728, loss2_3: 99.36743
+	train_acc: 0.8320, test_acc: [31m0.8287454957464988[0m, time: 63.68
+epoch: 37, loss: 99.89057, loss1: 0.75921, loss2_3: 99.13136
+	train_acc: 0.8300, test_acc: [31m0.8284483078866228[0m, time: 63.25
+epoch: 38, loss: 99.92323, loss1: 0.76034, loss2_3: 99.16289
+	train_acc: 0.8311, test_acc: [31m0.8262751216612801[0m, time: 63.34
+epoch: 39, loss: 99.73129, loss1: 0.75574, loss2_3: 98.97555
+	train_acc: 0.8313, test_acc: [31m0.8297113562910955[0m, time: 64.21
+epoch: 40, loss: 99.57385, loss1: 0.75391, loss2_3: 98.81994
+	train_acc: 0.8328, test_acc: [31m0.829674207808611[0m, time: 63.95
+epoch: 41, loss: 99.30772, loss1: 0.75407, loss2_3: 98.55365
+	train_acc: 0.8313, test_acc: [31m0.82974850477358[0m, time: 63.83
+epoch: 42, loss: 99.18516, loss1: 0.75338, loss2_3: 98.43178
+	train_acc: 0.8320, test_acc: [31m0.8296184850848842[0m, time: 63.60
+epoch: 43, loss: 99.16088, loss1: 0.75075, loss2_3: 98.41012
+	train_acc: 0.8321, test_acc: [31m0.8292841487425239[0m, time: 63.72
+epoch: 44, loss: 99.08377, loss1: 0.75126, loss2_3: 98.33251
+	train_acc: 0.8323, test_acc: [31m0.8286526245402875[0m, time: 63.67
+epoch: 45, loss: 98.94970, loss1: 0.75116, loss2_3: 98.19854
+	train_acc: 0.8316, test_acc: [31m0.8295256138786731[0m, time: 52.80
+epoch: 46, loss: 98.95309, loss1: 0.75186, loss2_3: 98.20124
+	train_acc: 0.8335, test_acc: [31m0.8311229986255061[0m, time: 52.51
+epoch: 47, loss: 98.79001, loss1: 0.74996, loss2_3: 98.04005
+	train_acc: 0.8325, test_acc: [31m0.8286154760578031[0m, time: 52.56
+epoch: 48, loss: 98.72106, loss1: 0.74574, loss2_3: 97.97532
+	train_acc: 0.8344, test_acc: [31m0.8302685835283629[0m, time: 53.32
+epoch: 49, loss: 98.63181, loss1: 0.74941, loss2_3: 97.88241
+	train_acc: 0.8344, test_acc: [31m0.8304357516995431[0m, time: 53.52
+epoch: 50, loss: 98.48596, loss1: 0.74820, loss2_3: 97.73777
+	train_acc: 0.8349, test_acc: [31m0.8319959879638916[0m, time: 54.36
+epoch: 51, loss: 98.53916, loss1: 0.74496, loss2_3: 97.79420
+	train_acc: 0.8336, test_acc: [31m0.8296370593261265[0m, time: 52.53
+epoch: 52, loss: 98.40668, loss1: 0.74694, loss2_3: 97.65974
+	train_acc: 0.8346, test_acc: [31m0.8324046212712211[0m, time: 52.56
+epoch: 53, loss: 98.37763, loss1: 0.74560, loss2_3: 97.63203
+	train_acc: 0.8339, test_acc: [31m0.8301014153571826[0m, time: 52.52
+epoch: 54, loss: 98.38744, loss1: 0.74528, loss2_3: 97.64216
+	train_acc: 0.8351, test_acc: [31m0.8305657713882388[0m, time: 52.43
+epoch: 55, loss: 98.11198, loss1: 0.74422, loss2_3: 97.36776
+	train_acc: 0.8353, test_acc: [31m0.8319774137226494[0m, time: 52.49
+epoch: 56, loss: 98.02468, loss1: 0.74504, loss2_3: 97.27963
+	train_acc: 0.8351, test_acc: [31m0.8318845425164382[0m, time: 52.43
+epoch: 57, loss: 97.92789, loss1: 0.74289, loss2_3: 97.18501
+	train_acc: 0.8322, test_acc: [31m0.8304543259407853[0m, time: 52.43
+epoch: 58, loss: 97.93607, loss1: 0.74302, loss2_3: 97.19305
+	train_acc: 0.8348, test_acc: [31m0.8316059288978045[0m, time: 52.46
+epoch: 59, loss: 97.90876, loss1: 0.74537, loss2_3: 97.16339
+	train_acc: 0.8345, test_acc: [31m0.8321445818938297[0m, time: 54.71
+epoch: 60, loss: 97.88411, loss1: 0.74297, loss2_3: 97.14114
+	train_acc: 0.8354, test_acc: [31m0.8314201864853821[0m, time: 57.76
+epoch: 61, loss: 97.77314, loss1: 0.74127, loss2_3: 97.03187
+	train_acc: 0.8361, test_acc: [31m0.8315130576915933[0m, time: 52.58
+epoch: 62, loss: 97.64517, loss1: 0.74038, loss2_3: 96.90479
+	train_acc: 0.8362, test_acc: [31m0.8320888591701029[0m, time: 52.42
+epoch: 63, loss: 97.55289, loss1: 0.74046, loss2_3: 96.81243
+	train_acc: 0.8361, test_acc: [31m0.8321445818938297[0m, time: 52.51
+epoch: 64, loss: 97.61019, loss1: 0.73968, loss2_3: 96.87050
+	train_acc: 0.8347, test_acc: [31m0.8298228017385489[0m, time: 52.42
+epoch: 65, loss: 97.58285, loss1: 0.73981, loss2_3: 96.84304
+	train_acc: 0.8356, test_acc: [31m0.8322003046175563[0m, time: 52.46
+epoch: 66, loss: 97.39326, loss1: 0.74050, loss2_3: 96.65276
+	train_acc: 0.8361, test_acc: [31m0.8316616516215313[0m, time: 52.40
+epoch: 67, loss: 97.35506, loss1: 0.74038, loss2_3: 96.61468
+	train_acc: 0.8354, test_acc: [31m0.8307143653181768[0m, time: 52.46
+epoch: 68, loss: 97.32439, loss1: 0.73874, loss2_3: 96.58566
+	train_acc: 0.8364, test_acc: [31m0.8325160667186745[0m, time: 52.40
+epoch: 69, loss: 97.32128, loss1: 0.74081, loss2_3: 96.58046
+	train_acc: 0.8370, test_acc: [31m0.8329247000260039[0m, time: 52.39
+epoch: 70, loss: 97.26047, loss1: 0.73722, loss2_3: 96.52324
+	train_acc: 0.8369, test_acc: [31m0.8332404621271221[0m, time: 52.41
+epoch: 71, loss: 97.00196, loss1: 0.73794, loss2_3: 96.26402
+	train_acc: 0.8374, test_acc: [31m0.8333704818158179[0m, time: 52.46
+epoch: 72, loss: 97.09941, loss1: 0.73551, loss2_3: 96.36390
+	train_acc: 0.8373, test_acc: [31m0.8319588394814071[0m, time: 52.42
+epoch: 73, loss: 96.99932, loss1: 0.73519, loss2_3: 96.26413
+	train_acc: 0.8367, test_acc: [31m0.8308443850068725[0m, time: 52.47
+epoch: 74, loss: 96.99363, loss1: 0.73887, loss2_3: 96.25477
+	train_acc: 0.8380, test_acc: [31m0.8321260076525874[0m, time: 52.50
+epoch: 75, loss: 96.86909, loss1: 0.73622, loss2_3: 96.13286
+	train_acc: 0.8374, test_acc: [31m0.8314759092091089[0m, time: 52.49
+epoch: 76, loss: 96.78281, loss1: 0.73841, loss2_3: 96.04440
+	train_acc: 0.8383, test_acc: [31m0.8328318288197927[0m, time: 52.47
+epoch: 77, loss: 96.85661, loss1: 0.73925, loss2_3: 96.11735
+	train_acc: 0.8386, test_acc: [31m0.8326460864073703[0m, time: 52.46
+epoch: 78, loss: 96.73911, loss1: 0.73664, loss2_3: 96.00247
+	train_acc: 0.8382, test_acc: [31m0.8334262045395445[0m, time: 52.45
+epoch: 79, loss: 96.75872, loss1: 0.73514, loss2_3: 96.02358
+	train_acc: 0.8379, test_acc: [31m0.8320888591701029[0m, time: 52.51
+epoch: 80, loss: 96.72022, loss1: 0.73443, loss2_3: 95.98579
+	train_acc: 0.8381, test_acc: [31m0.8328875515435195[0m, time: 52.46
+epoch: 81, loss: 96.75742, loss1: 0.73646, loss2_3: 96.02096
+	train_acc: 0.8385, test_acc: [31m0.8325903636836435[0m, time: 52.45
+epoch: 82, loss: 96.68767, loss1: 0.73763, loss2_3: 95.95003
+	train_acc: 0.8384, test_acc: [31m0.8329247000260039[0m, time: 52.51
+epoch: 83, loss: 96.53015, loss1: 0.73509, loss2_3: 95.79506
+	train_acc: 0.8379, test_acc: [31m0.8319031167576805[0m, time: 55.91
+epoch: 84, loss: 96.70912, loss1: 0.73314, loss2_3: 95.97598
+	train_acc: 0.8391, test_acc: [31m0.8325346409599168[0m, time: 55.95
+epoch: 85, loss: 96.25515, loss1: 0.73506, loss2_3: 95.52009
+	train_acc: 0.8380, test_acc: [31m0.8309186819718415[0m, time: 52.54
+epoch: 86, loss: 96.36998, loss1: 0.73472, loss2_3: 95.63526
+	train_acc: 0.8380, test_acc: [31m0.8333519075745756[0m, time: 52.50
+epoch: 87, loss: 96.28254, loss1: 0.73235, loss2_3: 95.55019
+	train_acc: 0.8389, test_acc: [31m0.8339462832943274[0m, time: 52.59
+epoch: 88, loss: 96.38784, loss1: 0.73600, loss2_3: 95.65184
+	train_acc: 0.8370, test_acc: [31m0.8325903636836435[0m, time: 52.53
+epoch: 89, loss: 96.25942, loss1: 0.73455, loss2_3: 95.52487
+	train_acc: 0.8392, test_acc: [31m0.8339462832943274[0m, time: 52.52
+epoch: 90, loss: 96.19857, loss1: 0.73380, loss2_3: 95.46477
+	train_acc: 0.8390, test_acc: [31m0.8331475909209108[0m, time: 52.74
+epoch: 91, loss: 96.24048, loss1: 0.73324, loss2_3: 95.50725
+	train_acc: 0.8369, test_acc: [31m0.8305100486645121[0m, time: 52.61
+epoch: 92, loss: 96.05423, loss1: 0.73113, loss2_3: 95.32310
+	train_acc: 0.8380, test_acc: [31m0.8328875515435195[0m, time: 52.55
+epoch: 93, loss: 96.14985, loss1: 0.73317, loss2_3: 95.41668
+	train_acc: 0.8402, test_acc: [31m0.832850403061035[0m, time: 52.56
+epoch: 94, loss: 96.18420, loss1: 0.73408, loss2_3: 95.45012
+	train_acc: 0.8371, test_acc: [31m0.8316245031390468[0m, time: 52.52
+epoch: 95, loss: 96.06983, loss1: 0.73140, loss2_3: 95.33844
+	train_acc: 0.8397, test_acc: [31m0.8334076302983023[0m, time: 52.59
+epoch: 96, loss: 96.09753, loss1: 0.73265, loss2_3: 95.36487
+	train_acc: 0.8389, test_acc: [31m0.8327389576135815[0m, time: 52.53
+epoch: 97, loss: 96.02184, loss1: 0.73480, loss2_3: 95.28704
+	train_acc: 0.8385, test_acc: [31m0.8322374531000408[0m, time: 52.53
+epoch: 98, loss: 96.04901, loss1: 0.72863, loss2_3: 95.32038
+	train_acc: 0.8391, test_acc: [31m0.8332033136446376[0m, time: 53.09
+epoch: 99, loss: 96.08040, loss1: 0.73323, loss2_3: 95.34717
+	train_acc: 0.8391, test_acc: [31m0.832701809131097[0m, time: 57.32
+epoch: 100, loss: 95.86203, loss1: 0.73122, loss2_3: 95.13081
+	train_acc: 0.8406, test_acc: [31m0.8337233923994205[0m, time: 57.77
+epoch: 101, loss: 95.90877, loss1: 0.73228, loss2_3: 95.17648
+	train_acc: 0.8405, test_acc: [31m0.8342434711542034[0m, time: 57.81
+epoch: 102, loss: 95.78635, loss1: 0.73068, loss2_3: 95.05568
+	train_acc: 0.8402, test_acc: [31m0.8324046212712211[0m, time: 57.73
+epoch: 103, loss: 95.91354, loss1: 0.72974, loss2_3: 95.18380
+	train_acc: 0.8396, test_acc: [31m0.8307515138006613[0m, time: 57.77
+epoch: 104, loss: 95.93679, loss1: 0.73209, loss2_3: 95.20469
+	train_acc: 0.8406, test_acc: [31m0.8328689773022772[0m, time: 59.33
+epoch: 105, loss: 95.84766, loss1: 0.72887, loss2_3: 95.11879
+	train_acc: 0.8401, test_acc: [31m0.8331290166796687[0m, time: 57.75
+epoch: 106, loss: 95.62153, loss1: 0.73064, loss2_3: 94.89089
+	train_acc: 0.8392, test_acc: [31m0.8321445818938297[0m, time: 57.80
+epoch: 107, loss: 95.71000, loss1: 0.73074, loss2_3: 94.97926
+	train_acc: 0.8387, test_acc: [31m0.8311972955904752[0m, time: 57.76
+epoch: 108, loss: 95.61592, loss1: 0.73237, loss2_3: 94.88355
+	train_acc: 0.8394, test_acc: [31m0.8319774137226494[0m, time: 53.67
+epoch: 109, loss: 95.50032, loss1: 0.72998, loss2_3: 94.77034
+	train_acc: 0.8413, test_acc: [31m0.8334819272632713[0m, time: 52.47
+epoch: 110, loss: 95.48872, loss1: 0.72780, loss2_3: 94.76092
+	train_acc: 0.8412, test_acc: [31m0.833686243916936[0m, time: 52.53
+epoch: 111, loss: 95.64311, loss1: 0.72733, loss2_3: 94.91578
+	train_acc: 0.8361, test_acc: [31m0.8285783275753186[0m, time: 52.40
+epoch: 112, loss: 95.43595, loss1: 0.72778, loss2_3: 94.70816
+	train_acc: 0.8406, test_acc: [31m0.8336490954344515[0m, time: 52.47
+epoch: 113, loss: 95.65360, loss1: 0.72934, loss2_3: 94.92426
+	train_acc: 0.8407, test_acc: [31m0.8334447787807868[0m, time: 52.53
+epoch: 114, loss: 95.50430, loss1: 0.72881, loss2_3: 94.77550
+	train_acc: 0.8390, test_acc: [31m0.8308443850068725[0m, time: 52.52
+epoch: 115, loss: 95.56274, loss1: 0.72758, loss2_3: 94.83515
+	train_acc: 0.8418, test_acc: [31m0.833834837846874[0m, time: 52.42
+epoch: 116, loss: 95.46252, loss1: 0.72914, loss2_3: 94.73339
+	train_acc: 0.8423, test_acc: [31m0.8340205802592964[0m, time: 53.25
+epoch: 117, loss: 95.48120, loss1: 0.73222, loss2_3: 94.74897
+	train_acc: 0.8422, test_acc: [31m0.8340205802592964[0m, time: 54.24
+epoch: 118, loss: 95.40636, loss1: 0.72932, loss2_3: 94.67704
+	train_acc: 0.8405, test_acc: [31m0.8322746015825253[0m, time: 52.61
+epoch: 119, loss: 95.33489, loss1: 0.72742, loss2_3: 94.60747
+	train_acc: 0.8414, test_acc: [31m0.833463353022029[0m, time: 52.35
+epoch: 120, loss: 95.33681, loss1: 0.73146, loss2_3: 94.60535
+	train_acc: 0.8420, test_acc: [31m0.8334447787807868[0m, time: 52.36
+epoch: 121, loss: 95.09032, loss1: 0.72746, loss2_3: 94.36286
+	train_acc: 0.8417, test_acc: [31m0.8340020060180542[0m, time: 52.36
+epoch: 122, loss: 95.23723, loss1: 0.72858, loss2_3: 94.50865
+	train_acc: 0.8420, test_acc: [31m0.8338719863293584[0m, time: 52.43
+epoch: 123, loss: 95.05418, loss1: 0.72834, loss2_3: 94.32585
+	train_acc: 0.8394, test_acc: [31m0.8307143653181768[0m, time: 52.34
+epoch: 124, loss: 95.18640, loss1: 0.72980, loss2_3: 94.45660
+	train_acc: 0.8427, test_acc: [31m0.8339277090530852[0m, time: 52.39
+epoch: 125, loss: 95.14426, loss1: 0.72512, loss2_3: 94.41913
+	train_acc: 0.8421, test_acc: [31m0.8337791151231472[0m, time: 52.68
+epoch: 126, loss: 95.11126, loss1: 0.72836, loss2_3: 94.38290
+	train_acc: 0.8417, test_acc: [31m0.8322188788587986[0m, time: 54.37
+epoch: 127, loss: 95.04984, loss1: 0.72629, loss2_3: 94.32355
+	train_acc: 0.8413, test_acc: [31m0.832701809131097[0m, time: 54.25
+epoch: 128, loss: 95.08507, loss1: 0.72945, loss2_3: 94.35562
+	train_acc: 0.8426, test_acc: [31m0.83338905605706[0m, time: 54.26
+epoch: 129, loss: 94.94318, loss1: 0.72702, loss2_3: 94.21616
+	train_acc: 0.8428, test_acc: [31m0.8339277090530852[0m, time: 54.25
+epoch: 130, loss: 94.97938, loss1: 0.72799, loss2_3: 94.25139
+	train_acc: 0.8407, test_acc: [31m0.8312901667966863[0m, time: 54.35
+epoch: 131, loss: 94.89668, loss1: 0.72523, loss2_3: 94.17145
+	train_acc: 0.8412, test_acc: [31m0.831643077380289[0m, time: 54.25
+epoch: 132, loss: 94.76573, loss1: 0.72548, loss2_3: 94.04025
+	train_acc: 0.8406, test_acc: [31m0.8306400683532078[0m, time: 54.28
+epoch: 133, loss: 94.81209, loss1: 0.72743, loss2_3: 94.08466
+	train_acc: 0.8431, test_acc: [31m0.8332776106096066[0m, time: 53.25
+epoch: 134, loss: 94.82476, loss1: 0.73003, loss2_3: 94.09473
+	train_acc: 0.8368, test_acc: [31m0.8286154760578031[0m, time: 56.41
+epoch: 135, loss: 94.90576, loss1: 0.72674, loss2_3: 94.17902
+	train_acc: 0.8433, test_acc: [31m0.8330547197146997[0m, time: 54.56
+epoch: 136, loss: 94.77706, loss1: 0.72646, loss2_3: 94.05060
+	train_acc: 0.8418, test_acc: [31m0.8332961848508489[0m, time: 52.47
+epoch: 137, loss: 94.82577, loss1: 0.72436, loss2_3: 94.10141
+	train_acc: 0.8410, test_acc: [31m0.831940265240165[0m, time: 52.44
+epoch: 138, loss: 94.80904, loss1: 0.72380, loss2_3: 94.08524
+	train_acc: 0.8437, test_acc: [31m0.834373490842899[0m, time: 52.52
+epoch: 139, loss: 94.75224, loss1: 0.72575, loss2_3: 94.02649
+	train_acc: 0.8431, test_acc: [31m0.8353579256287381[0m, time: 52.47
+epoch: 140, loss: 94.69401, loss1: 0.72627, loss2_3: 93.96774
+	train_acc: 0.8434, test_acc: [31m0.8340391545005387[0m, time: 53.08
+epoch: 141, loss: 94.67321, loss1: 0.72680, loss2_3: 93.94642
+	train_acc: 0.8435, test_acc: [31m0.833463353022029[0m, time: 54.33
+epoch: 142, loss: 94.56387, loss1: 0.72655, loss2_3: 93.83732
+	train_acc: 0.8433, test_acc: [31m0.8348192726327129[0m, time: 54.33
+epoch: 143, loss: 94.61810, loss1: 0.72550, loss2_3: 93.89260
+	train_acc: 0.8434, test_acc: [31m0.83247891823619[0m, time: 54.30
+epoch: 144, loss: 94.68913, loss1: 0.72737, loss2_3: 93.96177
+	train_acc: 0.8435, test_acc: [31m0.8333704818158179[0m, time: 54.31
+epoch: 145, loss: 94.52749, loss1: 0.72626, loss2_3: 93.80123
+	train_acc: 0.8433, test_acc: [31m0.83338905605706[0m, time: 53.52
+epoch: 146, loss: 94.55204, loss1: 0.72409, loss2_3: 93.82795
+	train_acc: 0.8446, test_acc: [31m0.8337419666406627[0m, time: 52.47
+epoch: 147, loss: 94.54032, loss1: 0.72320, loss2_3: 93.81712
+	train_acc: 0.8430, test_acc: [31m0.832776106096066[0m, time: 52.36
+epoch: 148, loss: 94.55565, loss1: 0.72449, loss2_3: 93.83116
+	train_acc: 0.8434, test_acc: [31m0.8342620453954456[0m, time: 52.42
+epoch: 149, loss: 94.39657, loss1: 0.72179, loss2_3: 93.67478
+	train_acc: 0.8398, test_acc: [31m0.8315502061740778[0m, time: 52.43
+epoch: 150, loss: 94.33267, loss1: 0.72525, loss2_3: 93.60742
+	train_acc: 0.8433, test_acc: [31m0.8332590363683644[0m, time: 52.39
+epoch: 151, loss: 94.39896, loss1: 0.72387, loss2_3: 93.67510
+	train_acc: 0.8432, test_acc: [31m0.8343549166016568[0m, time: 52.40
+epoch: 152, loss: 94.38510, loss1: 0.72175, loss2_3: 93.66336
+	train_acc: 0.8445, test_acc: [31m0.8344292135666258[0m, time: 52.41
+epoch: 153, loss: 94.42646, loss1: 0.72458, loss2_3: 93.70188
+	train_acc: 0.8437, test_acc: [31m0.833686243916936[0m, time: 52.41
+epoch: 154, loss: 94.30263, loss1: 0.72541, loss2_3: 93.57721
+	train_acc: 0.8433, test_acc: [31m0.8329618485084884[0m, time: 52.41
+epoch: 155, loss: 94.30482, loss1: 0.72341, loss2_3: 93.58141
+	train_acc: 0.8412, test_acc: [31m0.8308629592481147[0m, time: 52.39
+epoch: 156, loss: 94.35579, loss1: 0.72302, loss2_3: 93.63277
+	train_acc: 0.8400, test_acc: [31m0.8298970987035179[0m, time: 52.41
+epoch: 157, loss: 94.20632, loss1: 0.71859, loss2_3: 93.48773
+	train_acc: 0.8444, test_acc: [31m0.8335747984694826[0m, time: 52.41
+epoch: 158, loss: 94.22488, loss1: 0.72421, loss2_3: 93.50068
+	train_acc: 0.8439, test_acc: [31m0.8345778074965637[0m, time: 52.43
+epoch: 159, loss: 94.23811, loss1: 0.72281, loss2_3: 93.51530
+	train_acc: 0.8428, test_acc: [31m0.831865968275196[0m, time: 52.38
+epoch: 160, loss: 94.13886, loss1: 0.72085, loss2_3: 93.41801
+	train_acc: 0.8439, test_acc: [31m0.8335190757457558[0m, time: 52.44
+epoch: 161, loss: 94.12059, loss1: 0.72058, loss2_3: 93.40001
+	train_acc: 0.8444, test_acc: [31m0.8338905605706007[0m, time: 52.38
+epoch: 162, loss: 94.27898, loss1: 0.72450, loss2_3: 93.55448
+	train_acc: 0.8447, test_acc: [31m0.8324046212712211[0m, time: 52.43
+epoch: 163, loss: 94.06173, loss1: 0.72174, loss2_3: 93.34000
+	train_acc: 0.8440, test_acc: [31m0.8324231955124634[0m, time: 52.38
+epoch: 164, loss: 94.02340, loss1: 0.72127, loss2_3: 93.30213
+	train_acc: 0.8444, test_acc: [31m0.8327203833723392[0m, time: 52.46
+epoch: 165, loss: 94.00985, loss1: 0.72213, loss2_3: 93.28771
+	train_acc: 0.8451, test_acc: [31m0.8337419666406627[0m, time: 52.49
+epoch: 166, loss: 93.98303, loss1: 0.72110, loss2_3: 93.26193
+	train_acc: 0.8432, test_acc: [31m0.8322374531000408[0m, time: 52.49
+epoch: 167, loss: 94.04860, loss1: 0.72422, loss2_3: 93.32438
+	train_acc: 0.8451, test_acc: [31m0.8326089379248858[0m, time: 52.50
+epoch: 168, loss: 93.86122, loss1: 0.71985, loss2_3: 93.14137
+	train_acc: 0.8450, test_acc: [31m0.8324974924774323[0m, time: 52.58
+epoch: 169, loss: 94.09880, loss1: 0.72348, loss2_3: 93.37532
+	train_acc: 0.8432, test_acc: [31m0.8323860470299789[0m, time: 52.42
+epoch: 170, loss: 93.81921, loss1: 0.72143, loss2_3: 93.09777
+	train_acc: 0.8451, test_acc: [31m0.8331104424384264[0m, time: 52.46
+epoch: 171, loss: 93.88815, loss1: 0.71927, loss2_3: 93.16888
+	train_acc: 0.8440, test_acc: [31m0.8319774137226494[0m, time: 52.46
+epoch: 172, loss: 94.01088, loss1: 0.72232, loss2_3: 93.28856
+	train_acc: 0.8452, test_acc: [31m0.8333704818158179[0m, time: 52.47
+epoch: 173, loss: 94.14170, loss1: 0.72343, loss2_3: 93.41827
+	train_acc: 0.8447, test_acc: [31m0.8331104424384264[0m, time: 52.52
+epoch: 174, loss: 93.97086, loss1: 0.72015, loss2_3: 93.25071
+	train_acc: 0.8441, test_acc: [31m0.8323674727887366[0m, time: 52.48
+epoch: 175, loss: 93.74365, loss1: 0.71897, loss2_3: 93.02468
+	train_acc: 0.8437, test_acc: [31m0.8323117500650098[0m, time: 52.45
+epoch: 176, loss: 93.83653, loss1: 0.71949, loss2_3: 93.11704
+	train_acc: 0.8454, test_acc: [31m0.8328132545785505[0m, time: 52.54
+epoch: 177, loss: 93.86746, loss1: 0.72258, loss2_3: 93.14488
+	train_acc: 0.8448, test_acc: [31m0.8326832348898547[0m, time: 52.47
+epoch: 178, loss: 93.80838, loss1: 0.72259, loss2_3: 93.08578
+	train_acc: 0.8452, test_acc: [31m0.8330547197146997[0m, time: 52.46
+epoch: 179, loss: 93.71669, loss1: 0.71902, loss2_3: 92.99767
+	train_acc: 0.8452, test_acc: [31m0.8327389576135815[0m, time: 52.42
+epoch: 180, loss: 93.66033, loss1: 0.72206, loss2_3: 92.93827
+	train_acc: 0.8462, test_acc: [31m0.8335747984694826[0m, time: 52.47
+epoch: 181, loss: 93.72417, loss1: 0.72062, loss2_3: 93.00355
+	train_acc: 0.8459, test_acc: [31m0.8329247000260039[0m, time: 52.43
+epoch: 182, loss: 93.65479, loss1: 0.71982, loss2_3: 92.93498
+	train_acc: 0.8460, test_acc: [31m0.8332218878858798[0m, time: 52.41
+epoch: 183, loss: 93.58247, loss1: 0.72006, loss2_3: 92.86241
+	train_acc: 0.8429, test_acc: [31m0.8301199895984249[0m, time: 52.40
+epoch: 184, loss: 93.58211, loss1: 0.71739, loss2_3: 92.86472
+	train_acc: 0.8465, test_acc: [31m0.8331847394033953[0m, time: 52.47
+epoch: 185, loss: 93.47166, loss1: 0.71804, loss2_3: 92.75362
+	train_acc: 0.8460, test_acc: [31m0.8339462832943274[0m, time: 52.41
+epoch: 186, loss: 93.43593, loss1: 0.71773, loss2_3: 92.71821
+	train_acc: 0.8464, test_acc: [31m0.8341134514655076[0m, time: 52.53
+epoch: 187, loss: 93.60323, loss1: 0.72176, loss2_3: 92.88148
+	train_acc: 0.8440, test_acc: [31m0.8302500092871207[0m, time: 52.55
+epoch: 188, loss: 93.46640, loss1: 0.71807, loss2_3: 92.74833
+	train_acc: 0.8458, test_acc: [31m0.8342248969129611[0m, time: 52.52
+epoch: 189, loss: 93.42841, loss1: 0.71722, loss2_3: 92.71120
+	train_acc: 0.8440, test_acc: [31m0.8309744046955682[0m, time: 52.51
+epoch: 190, loss: 93.55653, loss1: 0.71895, loss2_3: 92.83758
+	train_acc: 0.8452, test_acc: [31m0.8321631561350719[0m, time: 52.50
+epoch: 191, loss: 93.56081, loss1: 0.71908, loss2_3: 92.84173
+	train_acc: 0.8456, test_acc: [31m0.8334447787807868[0m, time: 52.47
+epoch: 192, loss: 93.52119, loss1: 0.71786, loss2_3: 92.80333
+	train_acc: 0.8436, test_acc: [31m0.831940265240165[0m, time: 52.58
+epoch: 193, loss: 93.29860, loss1: 0.71859, loss2_3: 92.58001
+	train_acc: 0.8456, test_acc: [31m0.833760540881905[0m, time: 52.46
+epoch: 194, loss: 93.44741, loss1: 0.71769, loss2_3: 92.72972
+	train_acc: 0.8473, test_acc: [31m0.8354322225937071[0m, time: 52.51
+epoch: 195, loss: 93.45271, loss1: 0.71793, loss2_3: 92.73477
+	train_acc: 0.8465, test_acc: [31m0.8354879453174338[0m, time: 57.76
+epoch: 196, loss: 93.39852, loss1: 0.72036, loss2_3: 92.67815
+	train_acc: 0.8466, test_acc: [31m0.8330918681971842[0m, time: 59.44
+epoch: 197, loss: 93.36438, loss1: 0.71727, loss2_3: 92.64710
+	train_acc: 0.8461, test_acc: [31m0.8320517106876184[0m, time: 59.41
+epoch: 198, loss: 93.26634, loss1: 0.71555, loss2_3: 92.55080
+	train_acc: 0.8473, test_acc: [31m0.8335005015045135[0m, time: 57.75
+epoch: 199, loss: 93.16812, loss1: 0.71839, loss2_3: 92.44974
+	train_acc: 0.8462, test_acc: [31m0.8337791151231472[0m, time: 53.70
+epoch: 200, loss: 93.32385, loss1: 0.71912, loss2_3: 92.60472
+	train_acc: 0.8434, test_acc: [31m0.8305100486645121[0m, time: 52.46
+epoch: 201, loss: 93.12757, loss1: 0.71628, loss2_3: 92.41129
+	train_acc: 0.8474, test_acc: [31m0.8335376499869981[0m, time: 52.41
+epoch: 202, loss: 93.07766, loss1: 0.71832, loss2_3: 92.35934
+	train_acc: 0.8459, test_acc: [31m0.8325346409599168[0m, time: 52.40
+epoch: 203, loss: 93.28048, loss1: 0.71825, loss2_3: 92.56223
+	train_acc: 0.8467, test_acc: [31m0.8336305211932092[0m, time: 52.41
+epoch: 204, loss: 93.10541, loss1: 0.71775, loss2_3: 92.38765
+	train_acc: 0.8482, test_acc: [31m0.833760540881905[0m, time: 52.43
+epoch: 205, loss: 93.03826, loss1: 0.71687, loss2_3: 92.32139
+	train_acc: 0.8462, test_acc: [31m0.8326646606486126[0m, time: 52.41
+epoch: 206, loss: 93.06372, loss1: 0.71697, loss2_3: 92.34675
+	train_acc: 0.8480, test_acc: [31m0.8333333333333334[0m, time: 52.42
+epoch: 207, loss: 93.01958, loss1: 0.71231, loss2_3: 92.30727
+	train_acc: 0.8471, test_acc: [31m0.8333147590920911[0m, time: 52.40
+epoch: 208, loss: 93.07243, loss1: 0.71460, loss2_3: 92.35784
+	train_acc: 0.8474, test_acc: [31m0.8325903636836435[0m, time: 52.48
+epoch: 209, loss: 92.91583, loss1: 0.71373, loss2_3: 92.20209
+	train_acc: 0.8470, test_acc: [31m0.8325903636836435[0m, time: 52.39
+epoch: 210, loss: 92.90214, loss1: 0.71743, loss2_3: 92.18472
+	train_acc: 0.8457, test_acc: [31m0.8314201864853821[0m, time: 52.47
+epoch: 211, loss: 92.93850, loss1: 0.71723, loss2_3: 92.22127
+	train_acc: 0.8476, test_acc: [31m0.8340391545005387[0m, time: 52.48
+epoch: 212, loss: 92.93066, loss1: 0.71419, loss2_3: 92.21647
+	train_acc: 0.8479, test_acc: [31m0.8344477878078681[0m, time: 52.45
+epoch: 213, loss: 93.02541, loss1: 0.71597, loss2_3: 92.30945
+	train_acc: 0.8472, test_acc: [31m0.834373490842899[0m, time: 52.39
+epoch: 214, loss: 92.88344, loss1: 0.71415, loss2_3: 92.16930
+	train_acc: 0.8466, test_acc: [31m0.832776106096066[0m, time: 52.39
+epoch: 215, loss: 92.88472, loss1: 0.71684, loss2_3: 92.16788
+	train_acc: 0.8467, test_acc: [31m0.8314387607266244[0m, time: 52.40
+epoch: 216, loss: 92.79627, loss1: 0.71498, loss2_3: 92.08129
+	train_acc: 0.8471, test_acc: [31m0.8333333333333334[0m, time: 52.48
+epoch: 217, loss: 92.61399, loss1: 0.71271, loss2_3: 91.90128
+	train_acc: 0.8486, test_acc: [31m0.8340577287417809[0m, time: 52.43
+epoch: 218, loss: 92.69980, loss1: 0.71482, loss2_3: 91.98499
+	train_acc: 0.8474, test_acc: [31m0.833686243916936[0m, time: 52.52
+epoch: 219, loss: 92.60337, loss1: 0.71409, loss2_3: 91.88929
+	train_acc: 0.8475, test_acc: [31m0.8342806196366879[0m, time: 52.51
+epoch: 220, loss: 92.68709, loss1: 0.71474, loss2_3: 91.97235
+	train_acc: 0.8490, test_acc: [31m0.8336490954344515[0m, time: 52.49
+epoch: 221, loss: 92.80565, loss1: 0.71380, loss2_3: 92.09186
+	train_acc: 0.8474, test_acc: [31m0.8345406590140793[0m, time: 52.45
+epoch: 222, loss: 92.74655, loss1: 0.71472, loss2_3: 92.03183
+	train_acc: 0.8499, test_acc: [31m0.834596381737806[0m, time: 52.47
+epoch: 223, loss: 92.68037, loss1: 0.71243, loss2_3: 91.96794
+	train_acc: 0.8484, test_acc: [31m0.8330361454734574[0m, time: 52.38
+epoch: 224, loss: 92.65444, loss1: 0.71269, loss2_3: 91.94176
+	train_acc: 0.8454, test_acc: [31m0.8305100486645121[0m, time: 52.47
+epoch: 225, loss: 92.67102, loss1: 0.71383, loss2_3: 91.95719
+	train_acc: 0.8474, test_acc: [31m0.8336305211932092[0m, time: 52.44
+epoch: 226, loss: 92.63501, loss1: 0.71421, loss2_3: 91.92080
+	train_acc: 0.8484, test_acc: [31m0.8335190757457558[0m, time: 52.44
+epoch: 227, loss: 92.64542, loss1: 0.71797, loss2_3: 91.92744
+	train_acc: 0.8489, test_acc: [31m0.8337419666406627[0m, time: 52.46
+epoch: 228, loss: 92.61348, loss1: 0.71316, loss2_3: 91.90033
+	train_acc: 0.8483, test_acc: [31m0.8338534120881163[0m, time: 52.44
+epoch: 229, loss: 92.54264, loss1: 0.71419, loss2_3: 91.82845
+	train_acc: 0.8478, test_acc: [31m0.8327203833723392[0m, time: 52.32
+epoch: 230, loss: 92.48453, loss1: 0.71097, loss2_3: 91.77356
+	train_acc: 0.8481, test_acc: [31m0.8343177681191724[0m, time: 52.34
+epoch: 231, loss: 92.37837, loss1: 0.71201, loss2_3: 91.66636
+	train_acc: 0.8493, test_acc: [31m0.83338905605706[0m, time: 52.37
+epoch: 232, loss: 92.48307, loss1: 0.71461, loss2_3: 91.76846
+	train_acc: 0.8447, test_acc: [31m0.8292470002600394[0m, time: 52.48
+epoch: 233, loss: 92.53990, loss1: 0.71495, loss2_3: 91.82495
+	train_acc: 0.8450, test_acc: [31m0.8285040306103496[0m, time: 52.49
+epoch: 234, loss: 92.25991, loss1: 0.71206, loss2_3: 91.54785
+	train_acc: 0.8489, test_acc: [31m0.8329989969909729[0m, time: 52.54
+epoch: 235, loss: 92.32300, loss1: 0.71270, loss2_3: 91.61030
+	train_acc: 0.8491, test_acc: [31m0.8322931758237676[0m, time: 52.43
+epoch: 236, loss: 92.31842, loss1: 0.71439, loss2_3: 91.60403
+	train_acc: 0.8496, test_acc: [31m0.8335005015045135[0m, time: 52.36
+epoch: 237, loss: 92.21382, loss1: 0.71278, loss2_3: 91.50104
+	train_acc: 0.8481, test_acc: [31m0.8336676696756937[0m, time: 52.44
+epoch: 238, loss: 92.24204, loss1: 0.71472, loss2_3: 91.52732
+	train_acc: 0.8499, test_acc: [31m0.8340391545005387[0m, time: 52.46
+epoch: 239, loss: 92.22173, loss1: 0.71222, loss2_3: 91.50951
+	train_acc: 0.8495, test_acc: [31m0.8335376499869981[0m, time: 52.47
+epoch: 240, loss: 92.16162, loss1: 0.71355, loss2_3: 91.44807
+	train_acc: 0.8489, test_acc: [31m0.8332404621271221[0m, time: 52.48
+epoch: 241, loss: 91.99868, loss1: 0.71037, loss2_3: 91.28831
+	train_acc: 0.8507, test_acc: [31m0.833834837846874[0m, time: 52.44
+epoch: 242, loss: 92.30057, loss1: 0.71210, loss2_3: 91.58847
+	train_acc: 0.8488, test_acc: [31m0.8337048181581782[0m, time: 52.47
+epoch: 243, loss: 92.16288, loss1: 0.71311, loss2_3: 91.44977
+	train_acc: 0.8502, test_acc: [31m0.8332033136446376[0m, time: 52.51
+epoch: 244, loss: 92.16328, loss1: 0.71116, loss2_3: 91.45212
+	train_acc: 0.8505, test_acc: [31m0.8340020060180542[0m, time: 52.44
+epoch: 245, loss: 92.10089, loss1: 0.71129, loss2_3: 91.38961
+	train_acc: 0.8499, test_acc: [31m0.8326832348898547[0m, time: 52.40
+epoch: 246, loss: 92.10872, loss1: 0.71049, loss2_3: 91.39823
+	train_acc: 0.8497, test_acc: [31m0.8335376499869981[0m, time: 52.52
+epoch: 247, loss: 92.10155, loss1: 0.71293, loss2_3: 91.38862
+	train_acc: 0.8496, test_acc: [31m0.8324046212712211[0m, time: 52.41
+epoch: 248, loss: 91.97077, loss1: 0.71179, loss2_3: 91.25898
+	train_acc: 0.8486, test_acc: [31m0.8322560273412831[0m, time: 52.44
+epoch: 249, loss: 91.87891, loss1: 0.70966, loss2_3: 91.16925
+	train_acc: 0.8483, test_acc: [31m0.8313830380028976[0m, time: 52.43
+epoch: 250, loss: 91.99666, loss1: 0.71218, loss2_3: 91.28448
+	train_acc: 0.8507, test_acc: [31m0.8332218878858798[0m, time: 52.43
