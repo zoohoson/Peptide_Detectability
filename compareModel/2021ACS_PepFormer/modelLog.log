@@ -552,3 +552,5 @@ epoch: 249, loss: 91.87891, loss1: 0.70966, loss2_3: 91.16925
 	train_acc: 0.8483, test_acc: [31m0.8313830380028976[0m, time: 52.43
 epoch: 250, loss: 91.99666, loss1: 0.71218, loss2_3: 91.28448
 	train_acc: 0.8507, test_acc: [31m0.8332218878858798[0m, time: 52.43
+epoch: 1, loss: 142.60659, loss1: 1.24321, loss2_3: 141.36338
+	train_acc: 0.8057, test_acc: [31m0.8174790444729095[0m, time: 142.48
