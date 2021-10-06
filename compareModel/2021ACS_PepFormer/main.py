@@ -141,7 +141,7 @@ train_iter_cont = torch.utils.data.DataLoader(train_dataset, batch_size=batch_si
                                                                   shuffle=True,collate_fn=collate)
 
   
-device = torch.device("cuda",1)
+device = torch.device("cuda",0)
 
 
 def evaluate_accuracy(data_iter, net):
