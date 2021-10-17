@@ -6,7 +6,10 @@ __pycache__
 data/
 Datasets/
 dataset/
-.zip
-.pickle
-.hdf5
+*.zip
+*.pickle
+*.hdf5
 refModel/
+*.msms
+*.csv
+
