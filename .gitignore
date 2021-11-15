@@ -12,4 +12,6 @@ dataset/
 refModel/
 *.msms
 *.csv
-
+*.pl
+*.joblib
+*.h5
