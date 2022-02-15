@@ -13,6 +13,7 @@ __email__ = "juho8563@hanyang.ac.kr"
 __status__ = "Development"
 
 import time
+from ahocorapy.keywordtree import KeywordTree
 
 
 def get_spectral_cnt(data_path: str) -> dict():
@@ -132,8 +133,8 @@ def merge_protein_precursor(prot_precursor_cnt: dict, prot_seq: dict) -> dict():
     '''
     Merge Uniprot and Human Spectral Library(HSL) for identified peptide counting
     Input : prot_precursor_cnt, prot_seq
-    output : prot_seq_precursor { protein : {seq: ARNDCEQG, 
-                                             precursor: [ (peptide, charge, spectral_cnt)s ]
+    output : prot_seq_precursor { protein : {sequence: ARNDCEQG, 
+                                             precursors: [ (peptide, charge, spectral_cnt)s ]
                                             } 
                                 }
     '''
@@ -151,35 +152,324 @@ def get_peptide_cnt(prot_seq_precursor: dict) -> dict():
     '''
     Counting of striped peptide's spectral count (sum)
     Input : prot_seq_precursor
-    Output : peptide_cnt { peptide : spectral_cnt } dictionary
+    Output : prot_seq_peptide { protein : {sequence: ARNDCEQG, 
+                                           peptides: { peptide : count }
+                                          } 
+                                }
+    '''
+    prot_seq_peptide = dict()
+    for prot_name, prot_info in prot_seq_precursor.items():
+        prot_seq = prot_info['sequence']
+        prot_precursors = prot_info['precursors']
+
+        prot_pep_cnt = dict()
+        for precursor in prot_precursors:
+            pre_ptm_seq, pre_charge, pre_cnt = precursor
+            pre_strip_seq = ''.join(filter(lambda x: ord(x) in range(65, 91), pre_ptm_seq))
+            if pre_strip_seq not in prot_pep_cnt:
+                prot_pep_cnt[pre_strip_seq] = 0
+            prot_pep_cnt[pre_strip_seq] += pre_cnt
+        if prot_name not in prot_seq_peptide:
+            prot_seq_peptide[prot_name] = dict()
+        prot_seq_peptide[prot_name]['sequence'] = prot_seq
+        prot_seq_peptide[prot_name]['peptides'] = prot_pep_cnt
+    return prot_seq_peptide
+
+
+def get_peptide_tree(prot_seq_peptide: dict) -> dict():
+    '''
+    Contructing peptide tree
+    Input : prot_seq_peptide
+    Output : prot_seq_peptide { protein : {sequence: ARNDCEQG, 
+                                           peptides: { peptide : count }
+                                           peptide_tree: tree_instance
+                                          } 
+                                }
+    '''
+    for prot_name, prot_info in prot_seq_peptide.items():
+        prot_peptideas = prot_info['peptides']
+        tree = KeywordTree()
+        for peptide in prot_peptideas:
+            tree.add(peptide)
+        tree.finalize()
+        prot_seq_peptide[prot_name]['peptide_tree'] = tree
+    return prot_seq_peptide
+
+
+def get_protein_coverage(prot_seq_peptide: dict) -> dict():
+    '''
+    Contructing peptide tree
+    Input : prot_seq_peptide
+    Output : prot_seq_peptide { protein : {sequence: ARNDCEQG, 
+                                           peptides: { peptide : count }
+                                           peptide_tree: tree_instance,
+                                           coverage: 0.5
+                                          } 
+                                }
+    '''
+    for prot_name, prot_info in prot_seq_peptide.items():
+        prot_seq = prot_info['sequence']
+        tree = prot_info['peptide_tree']
+
+        prot_coverage = [0 for _ in prot_seq]
+        prot_peptides = tree.search_all(prot_seq)
+        for peptide, START_IDX in prot_peptides:  # result = ('ACAC', 5) = (peptide, location) by ahocorapy
+            for AA_IDX, cnt in enumerate(prot_coverage):
+                if AA_IDX in range(START_IDX, START_IDX + len(peptide)):
+                    cnt += 1
+                    prot_coverage[AA_IDX] = cnt
+
+        IDENTIFIED_AMINO_ACID_NUM = sum([1 for AA_CNT in prot_coverage if AA_CNT >= 1])
+        PROTEIN_LENGTH = len(prot_seq)
+        COVERAGE = IDENTIFIED_AMINO_ACID_NUM / PROTEIN_LENGTH
+        prot_seq_peptide[prot_name]['coverage'] = COVERAGE
+    return prot_seq_peptide
+
+
+def get_protein_count(prot_seq_peptide: dict) -> dict():
+    '''
+    Counting of protein's amino acid with identified peptide's spectral count
+    Input : prot_seq_peptide
+    Output : prot_seq_peptide { protein : {sequence: ARNDCEQG, 
+                                           cleavage_cnt: [1, 0, ..., 4],
+                                           miss_cleavage_cnt: [0, 1, ..., 0],
+                                           peptides: { peptide : count }
+                                           peptide_tree: tree_instance,
+                                           coverage: 0.5
+                                           }
+                                }
+                                         
+    '''
+    TRYPTIC_SITE = 'KR'
+    for prot_name, prot_info in prot_seq_peptide.items():
+        prot_seq = prot_info['sequence']
+        pep_tree = prot_info['peptide_tree']
+        pep_cnt = prot_info['peptides']
+        # counting array init
+        prot_cleavage_cnt = [0 for _ in prot_seq]
+        prot_miss_cleavage_cnt = [0 for _ in prot_seq]
+        
+        prot_peptides = pep_tree.search_all(prot_seq)
+        for peptide, START_IDX in prot_peptides: 
+            SPECTRAL_CNT = pep_cnt[peptide]
+            CLEAVAGE_CNT = sum([1 for amino_acid in peptide[:-1] if amino_acid in TRYPTIC_SITE])  # except C-terminal of peptide
+            # Case of inlcuding missed cleavage sites (__KR__)
+            if CLEAVAGE_CNT >= 1:  
+                
+                # Case of that C-terminal of peptide is cleavage site  (__KR__KR)
+                if peptide[-1] in TRYPTIC_SITE:
+                    # Counting of missed cleavage sites at amino acid level
+                    for AA_IDX, value in enumerate(prot_miss_cleavage_cnt):
+                        if AA_IDX in range(START_IDX, START_IDX + len(peptide) -1):
+                            value += SPECTRAL_CNT
+                            prot_miss_cleavage_cnt[AA_IDX] = value
+                    # Counting of cleavage sites at amino acid level
+                    # only count first and last amino acid of peptide, which include miss cleavage
+                    # last : For counting N-terminal of cleavage site
+                    # first : For counting C-terminal of cleavage site
+                    prot_cleavage_cnt[START_IDX + len(peptide) - 1] += SPECTRAL_CNT
+                    prot_cleavage_cnt[START_IDX] += SPECTRAL_CNT
+                
+                # Case of that C-terminal of peptide is not cleavage site (__KR__)
+                else:
+                    # Counting of missed cleavage sites at amino aicd level
+                    for AA_IDX, value in enumerate(prot_miss_cleavage_cnt):
+                        if AA_IDX in range(START_IDX, START_IDX + len(peptide)):
+                            value += SPECTRAL_CNT
+                            prot_miss_cleavage_cnt[AA_IDX] = value
+            
+            # Case of not including missed cleavage sites
+            else:
+                # peptide(spectral) count
+                for AA_IDX, value in enumerate(prot_cleavage_cnt):
+                    if AA_IDX in range(START_IDX, START_IDX + len(peptide)):
+                        value += pep_cnt[peptide]
+                        prot_cleavage_cnt[AA_IDX] = value
+
+        prot_seq_peptide[prot_name]['cleavage_cnt'] = prot_cleavage_cnt
+        prot_seq_peptide[prot_name]['miss_cleavage_cnt'] = prot_miss_cleavage_cnt
+    
+    return prot_seq_peptide
+
+
+def filter_protein(prot_seq_peptide: dict, threshold: float = 0.5) -> dict():
+    '''
+    Filtering of protein which has coverage above 0.5
+    Input : prot_seq_peptide
+    Output : prot_seq_peptide { protein : {sequence: ARNDCEQG, 
+                                           cleavage_cnt: [1, 0, ..., 4],
+                                           miss_cleavage_cnt: [0, 1, ..., 0],
+                                           peptides: { peptide : count }
+                                           peptide_tree: tree_instance,
+                                           coverage: 0.5
+                                           }
+                                }
+                                         
+    '''
+    filtered_prot_seq_peptide = dict()
+    for prot_name, prot_info in prot_seq_peptide.items():
+        if prot_info['coverage'] >= 0.5:
+            filtered_prot_seq_peptide[prot_name] = prot_info
+    return filtered_prot_seq_peptide
+
+
+def get_peptide_from_protein(prot_seq_peptide: dict, DIGEST_MERS:int = 7) -> dict():
+    '''
+    Getting peptides from proteins
+    Input : prot_seq_peptide
+    Output : prot_seq_peptide { protein : {sequence: ARNDCEQG, 
+                                           cleavage_cnt: [1, 0, ..., 4],
+                                           miss_cleavage_cnt: [0, 1, ..., 0],
+                                           peptides: { peptide : count }
+                                           peptide_tree: tree_instance,
+                                           coverage: 0.5,
+                                           labelled_peptides : { peptide : {n: AA,
+                                                                            c: AA,
+                                                                            m1: AA,
+                                                                            m2: AA
+                                                                }
+                                           }
+                                }
+                                         
     '''
     
+    TRYPTIC_SITE = 'KR'
+    for prot_name, prot_info in prot_seq_peptide.items():
+        cnt = list(map(lambda x: int(x[2:]), cnt.split(';')))
+        cnt_miss = list(map(lambda x: int(x[2:]), cnt_miss.split(';')))
 
-def prot2cnt():
-    pass
+        # for labelling
+        pep_tree = prot_info['peptide_tree']
+        pep_cnt = prot_info['peptides']
 
-def pep_tree():
-    pass
+        # slicing
+        prot_seq = prot_info['sequence']
+        prot_seq_peptide[prot_name]['labelled_peptides'] = dict()  # init
+        cleavage_sites = [AA_IDX for AA_IDX, aa in enumerate(prot_seq) if aa in TRYPTIC_SITE]
+        MISS_CLEAVAGES = [0, 1, 2]
+        for MISS_CLEAVAGE_CNT in MISS_CLEAVAGES:
 
-def prot_filtration(threshold=0.5):
-    pass
-# digest, detect protein
+            # consider miss cleavage sites and c-terminal site
+            cleavage_range = range(len(cleavage_sites) - MISS_CLEAVAGE_CNT - 1)  
+            for CS_IDX in cleavage_range:
+                
+
+                # N terminal of peptide
+                condi_prot_nterm_pep_nterm = cleavage_sites[CS_IDX] < DIGEST_MERS
+                condi_prot_cterm_pep_nterm = cleavage_sites[CS_IDX] > len(prot_seq) - 1 - (DIGEST_MERS)
+                nterm_pad_pep_nterm = 'Z' * (DIGEST_MERS - cleavage_sites[CS_IDX]) 
+                cterm_pad_pep_nterm = 'Z' * (DIGEST_MERS - (len(prot_seq) - 1 - cleavage_sites[CS_IDX]))
+                pep_nterm_start_idx = cleavage_sites[CS_IDX] - DIGEST_MERS
+                pep_nterm_end_idx = cleavage_sites[CS_IDX] + DIGEST_MERS + 1
+                if condi_prot_nterm_pep_nterm and condi_prot_cterm_pep_nterm:  # ex) --MNQKLLK-- : both n and c term of protein are insufficient
+                    # pep_seq = prot_seq[:pep_nterm_end_idx]  # test ...
+                    pep_seq = prot_seq
+                    pep_nterm = nterm_pad_pep_nterm + pep_seq + cterm_pad_pep_nterm
+                elif condi_prot_nterm_pep_nterm:
+                    pep_seq = prot_seq[:pep_nterm_end_idx]
+                    pep_nterm = nterm_pad_pep_nterm + pep_seq
+                elif condi_prot_cterm_pep_nterm:
+                    pep_seq = prot_seq[pep_nterm_start_idx:]
+                    pep_nterm = pep_seq + cterm_pad_pep_nterm
+                else:
+                    pep_nterm = prot_seq[pep_nterm_start_idx : pep_nterm_end_idx]
+                
+                # C terminal of peptide
+                condi_prot_nterm_pep_cterm = cleavage_sites[CS_IDX + MISS_CLEAVAGE_CNT + 1] < DIGEST_MERS
+                condi_prot_cterm_pep_cterm = cleavage_sites[CS_IDX + MISS_CLEAVAGE_CNT + 1] > len(prot_seq) - 1 - (DIGEST_MERS)
+                nterm_pad_pep_cterm = 'Z' * (DIGEST_MERS - cleavage_sites[CS_IDX + MISS_CLEAVAGE_CNT + 1])
+                cterm_pad_pep_cterm = 'Z' * (DIGEST_MERS - (len(prot_seq) - 1 - cleavage_sites[CS_IDX + MISS_CLEAVAGE_CNT + 1]))
+                pep_cterm_start_idx = cleavage_sites[CS_IDX + MISS_CLEAVAGE_CNT + 1] - DIGEST_MERS
+                pep_cterm_end_idx = cleavage_sites[CS_IDX + MISS_CLEAVAGE_CNT + 1] + (DIGEST_MERS + 1)
+                if condi_prot_nterm_pep_cterm and condi_prot_cterm_pep_cterm:
+                    # pep_seq = prot_seq[:pep_cterm_end_idx]  # test ...
+                    pep_seq = prot_seq
+                    pep_cterm = nterm_pad_pep_cterm + pep_seq + cterm_pad_pep_cterm
+                elif condi_prot_nterm_pep_cterm:
+                    pep_seq = prot_seq[:pep_cterm_end_idx]
+                    pep_cterm = nterm_pad_pep_cterm + pep_seq
+                elif condi_prot_cterm_pep_cterm:
+                    pep_seq = prot_seq[pep_cterm_start_idx:]
+                    pep_cterm = pep_seq + cterm_pad_pep_cterm
+                else:
+                    pep_cterm = prot_seq[pep_cterm_start_idx : pep_cterm_end_idx]
+
+                # missed cleavage site of peptide
+                pep_miss = {'pep_miss1': 'Z' * DIGEST_MERS + 'Z' + 'Z' * DIGEST_MERS,  # init
+                            'pep_miss2': 'Z' * DIGEST_MERS + 'Z' + 'Z' * DIGEST_MERS}
+                for mcc in range(1, MISS_CLEAVAGE_CNT + 1):
+                    condi_prot_nterm_pep_miss = cleavage_sites[CS_IDX + mcc] < DIGEST_MERS
+                    condi_prot_cterm_pep_miss = cleavage_sites[CS_IDX + mcc] > len(prot_seq) - 1 - (DIGEST_MERS)
+                    nterm_pad_pep_miss = 'Z' * (DIGEST_MERS - (len(prot_seq) - 1 - cleavage_sites[CS_IDX + mcc]))
+                    cterm_pad_pep_miss = 'Z' * (DIGEST_MERS - cleavage_sites[CS_IDX + mcc])
+                    pep_miss_start_idx = cleavage_sites[CS_IDX + mcc] - DIGEST_MERS
+                    pep_miss_end_idx = cleavage_sites[CS_IDX + mcc] + DIGEST_MERS + 1
+                    if condi_prot_nterm_pep_miss and condi_prot_cterm_pep_miss:
+                        pep_seq = prot_seq
+                        pep_miss['pep_miss' + str(mcc)] = nterm_pad_pep_miss + pep_seq + cterm_pad_pep_miss
+                    if condi_prot_nterm_pep_miss:
+                        pep_seq = prot_seq[:pep_miss_end_idx]
+                        pep_miss['pep_miss' + str(mcc)] = nterm_pad_pep_miss + pep_seq
+                    elif condi_prot_cterm_pep_miss:
+                        pep_seq = prot_seq[pep_miss_start_idx:]
+                        pep_miss['pep_miss' + str(mcc)] = pep_seq + cterm_pad_pep_miss
+                    else:
+                        pep_miss['pep_miss' + str(mcc)] = prot_seq[pep_miss_start_idx : pep_miss_end_idx]
+                pep_miss1, pep_miss2 = pep_miss['pep_miss1'], pep_miss['pep_miss2']
+
+                # peptide
+                pep_body_start_idx = cleavage_sites[CS_IDX] + 1
+                pep_body_end_idx = cleavage_sites[CS_IDX + MISS_CLEAVAGE_CNT + 1] + 1
+                pep_body = prot_seq[pep_body_start_idx : pep_body_end_idx]
+
+                # filtration of U, X (Amino Acid)
+                ux_filter = lambda seq: True if 'U' in seq or 'X' in seq else False
+                if ux_filter(pep_body) or ux_filter(pep_nterm) or ux_filter(pep_cterm) or ux_filter(pep_miss1) or ux_filter(pep_miss2):
+                    continue  # not save this peptide
+
+                # labelling
+                PEP_IDX = 0
+                PEP_START_IDX = 1
+                identified_peps = [p[PEP_IDX] for p in pep_tree.search_all(pep_body)]
+                if pep_body in identified_peps:
+                    if pep_cnt[pep_body] > 1:  # positive : peptide has spectral count over 1 (at least 2)
+                        label = True
+                    else:
+                        continue  # not save this peptide (neither positive nor negative peptide)
+                else:  # negative : not identified peptide
+                    label = False
+                
+                # save
+                pep_set = (pep_body, pep_nterm, pep_cterm, pep_miss1, pep_miss2)
+                prot_seq_peptide[prot_name]['labelled_peptides'][pep_set] = label
+
+    return prot_seq_peptide
 
 
-def pep_from_prot():
-    pass
+def divide_digestability_detectability(prot_seq_peptide: dict) -> dict():
+    '''
+    dividing peptides for compare with AP3
+    Input : prot_seq_peptide
+    Output : prot_digest, prot_detect (same with input, just divide)
+    '''
+    
+    prot_name_idx = {pn:idx for idx, pn in enumerate(prot_seq_peptide.keys())}
+    prot_name_idx_rev = {idx:pn for pn, idx in prot_name_idx.items()}
+    digest_prot_name = {prot_name_idx_rev[digest_idx] for digest_idx in range(len(prot_name_idx_rev)//2)}
+    detect_prot_name = {prot_name_idx_rev[detect_idx] for detect_idx in range(len(prot_name_idx_rev)//2, len(prot_name_idx_rev)+1)}
+    prot_digest = {pn:prot_seq_peptide[pn] for pn in digest_prot_name}
+    prot_detect = {pn:prot_seq_peptide[pn] for pn in detect_prot_name}
+    return prot_digest, prot_detect
+    
+    
+def merge_digestability_detectability(prot_digest: dict, prot_detect: dict) -> dict():
+    '''
+    Merging peptide to dataframe
+    Input : prot_seq_peptide
+    Output : prot_digest, prot_detect (same with input, just divide)
+    '''
 
 
-def pep2cnt():
-    pass
-
-
-def pep_detection_labelling():
-    pass
-
-
-def digest2detect():
-    pass
 
 
 def main():
@@ -193,38 +483,52 @@ def main():
     # [PROTEIN] human uniprot file
     fasta_fn = 'uniprot/uniprot-proteome_UP000005640.fasta'
 
-    print('### get spectral count ...\t\t\t')
+    # preprocessing of massIVE-KB
+    print('### get spectral count ...\t\t\t', end='\r')
     precursor_cnt = get_spectral_cnt(path + hslcand_fn)
     prot_precursor = get_precursor(path + hsl_fn)
     prot_precursor_cnt = merge_precursor_cnt(prot_precursor, precursor_cnt)
     elapsed_time = int((time.time()-start_time)/60)
     print(f'### finish getting of precursors ... time elapsed {elapsed_time} min \t\t\t')
 
-    idx=0
-    for k,v in prot_precursor:
-        print(k,v)
-        idx+=1
-        if idx==5:
-            break
-
-    idx=0
-    for k,v in prot_precursor_cnt:
-        print(k,v)
-        idx+=1
-        if idx==5:
-            break
-
-    print('### get protein ... \t\t\t')
+    # preprocessing of Uniprot
+    print('### get protein ... \t\t\t', end='\r')
     prot_seq = get_protein(path + fasta_fn)
     elapsed_time = int((time.time()-start_time)/60)
     print(f'### finish getting of proteins ... time elapsed {elapsed_time} min \t\t\t')
 
-    print('### merge files ... \t\t\t')
+    # preprocessing of massIVE-KB and Uniprot
+    print('### merge files ... \t\t\t', end='\r')
     prot_seq_precursor = merge_protein_precursor(prot_precursor_cnt, prot_seq)
     elapsed_time = int((time.time()-start_time)/60)
     print(f'### finish merging of proteins and precursors ... time elapsed {elapsed_time} min \t\t\t')
 
-    print('intersection of massIVE-KB and Uniprot proteins : {}'.format(len(prot_seq_precursor)))
+    # preprocessing of dataset for train
+    print('### matching proteins and peptides ... \t\t\t', end='\r')
+    prot_seq_peptide = get_peptide_cnt(prot_seq_precursor)
+    prot_seq_peptide = get_peptide_tree(prot_seq_peptide)
+    prot_seq_peptide = get_protein_coverage(prot_seq_peptide)
+    elapsed_time = int((time.time()-start_time)/60)
+    print(f'### finish matching proteins and peptides ... time elapsed {elapsed_time} min \t\t\t')
+
+    # Counting spectral count
+    print('### Counting of peptide\'s spectral experiments ... \t\t\t', end='\r')
+    prot_seq_peptide = get_protein_count(prot_seq_peptide)
+    prot_seq_peptide = filter_protein(prot_seq_peptide)
+    elapsed_time = int((time.time()-start_time)/60)
+    print(f'### finish Counting and Labelling ... time elapsed {elapsed_time} min \t\t\t')
+
+    # Getting peptides from protein
+    print('### Getting peptides from proteins ... \t\t\t', end='\r')
+    prot_seq_peptide = get_peptide_from_protein(prot_seq_peptide)
+    elapsed_time = int((time.time()-start_time)/60)
+    print(f'### finish Getting and Labelling of peptides ... time elapsed {elapsed_time} min \t\t\t')
+
+    print('### Dividing and Merging for train, val, test ... \t\t\t', end='\r')
+    prot_digest, prot_detect = divide_digestability_detectability(prot_seq_peptide)
+    df_peptide = merge_digestability_detectability(prot_digest, prot_detect)
+    df_peptide.to_csv('tmp.csv', index=False)
+
 
 if __name__ == '__main__':
     main()
