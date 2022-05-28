@@ -12,7 +12,11 @@ __maintainer__ = "Juho Son"
 __email__ = "juho8563@hanyang.ac.kr"
 __status__ = "Development"
 
+
 import time
+import pandas as pd
+import json
+import pickle
 from ahocorapy.keywordtree import KeywordTree
 
 
@@ -304,12 +308,29 @@ def filter_protein(prot_seq_peptide: dict, threshold: float = 0.5) -> dict():
                                            coverage: 0.5
                                            }
                                 }
-                                         
+
     '''
     filtered_prot_seq_peptide = dict()
+    all_peptides = set()
+    filtered_peptides = set()
     for prot_name, prot_info in prot_seq_peptide.items():
+        ##################################
+        # counting for paper
+        for peptide in prot_info['peptides']:
+            all_peptides.add(peptide)
+        ##################################
         if prot_info['coverage'] >= 0.5:
             filtered_prot_seq_peptide[prot_name] = prot_info
+            ##################################
+            for peptide in prot_info['peptides']:
+                filtered_peptides.add(peptide)
+            ##################################
+    print('##################################')
+    print('whole numboer of identified proteins, peptides :', 
+            len(prot_seq_peptide), len(all_peptides))
+    print('whole numboer of filtered proteins, peptides :', 
+            len(filtered_prot_seq_peptide), len(filtered_peptides))
+    print('##################################')
     return filtered_prot_seq_peptide
 
 
@@ -330,14 +351,10 @@ def get_peptide_from_protein(prot_seq_peptide: dict, DIGEST_MERS:int = 7) -> dic
                                                                 }
                                            }
                                 }
-                                         
     '''
     
     TRYPTIC_SITE = 'KR'
     for prot_name, prot_info in prot_seq_peptide.items():
-        cnt = list(map(lambda x: int(x[2:]), cnt.split(';')))
-        cnt_miss = list(map(lambda x: int(x[2:]), cnt_miss.split(';')))
-
         # for labelling
         pep_tree = prot_info['peptide_tree']
         pep_cnt = prot_info['peptides']
@@ -400,8 +417,8 @@ def get_peptide_from_protein(prot_seq_peptide: dict, DIGEST_MERS:int = 7) -> dic
                 for mcc in range(1, MISS_CLEAVAGE_CNT + 1):
                     condi_prot_nterm_pep_miss = cleavage_sites[CS_IDX + mcc] < DIGEST_MERS
                     condi_prot_cterm_pep_miss = cleavage_sites[CS_IDX + mcc] > len(prot_seq) - 1 - (DIGEST_MERS)
-                    nterm_pad_pep_miss = 'Z' * (DIGEST_MERS - (len(prot_seq) - 1 - cleavage_sites[CS_IDX + mcc]))
-                    cterm_pad_pep_miss = 'Z' * (DIGEST_MERS - cleavage_sites[CS_IDX + mcc])
+                    nterm_pad_pep_miss = 'Z' * (DIGEST_MERS - cleavage_sites[CS_IDX + mcc])
+                    cterm_pad_pep_miss = 'Z' * (DIGEST_MERS - (len(prot_seq) - 1 - cleavage_sites[CS_IDX + mcc]))
                     pep_miss_start_idx = cleavage_sites[CS_IDX + mcc] - DIGEST_MERS
                     pep_miss_end_idx = cleavage_sites[CS_IDX + mcc] + DIGEST_MERS + 1
                     if condi_prot_nterm_pep_miss and condi_prot_cterm_pep_miss:
@@ -421,6 +438,8 @@ def get_peptide_from_protein(prot_seq_peptide: dict, DIGEST_MERS:int = 7) -> dic
                 pep_body_start_idx = cleavage_sites[CS_IDX] + 1
                 pep_body_end_idx = cleavage_sites[CS_IDX + MISS_CLEAVAGE_CNT + 1] + 1
                 pep_body = prot_seq[pep_body_start_idx : pep_body_end_idx]
+                if not 6 <= len(pep_body) <= 40:  # following identified peptide (massIVE-KB) length distribution
+                    continue  # not save this peptide
 
                 # filtration of U, X (Amino Acid)
                 ux_filter = lambda seq: True if 'U' in seq or 'X' in seq else False
@@ -440,7 +459,7 @@ def get_peptide_from_protein(prot_seq_peptide: dict, DIGEST_MERS:int = 7) -> dic
                     label = False
                 
                 # save
-                pep_set = (pep_body, pep_nterm, pep_cterm, pep_miss1, pep_miss2)
+                pep_set = ' '.join([pep_body, pep_nterm, pep_cterm, pep_miss1, pep_miss2])
                 prot_seq_peptide[prot_name]['labelled_peptides'][pep_set] = label
 
     return prot_seq_peptide
@@ -456,9 +475,9 @@ def divide_digestability_detectability(prot_seq_peptide: dict) -> dict():
     prot_name_idx = {pn:idx for idx, pn in enumerate(prot_seq_peptide.keys())}
     prot_name_idx_rev = {idx:pn for pn, idx in prot_name_idx.items()}
     digest_prot_name = {prot_name_idx_rev[digest_idx] for digest_idx in range(len(prot_name_idx_rev)//2)}
-    detect_prot_name = {prot_name_idx_rev[detect_idx] for detect_idx in range(len(prot_name_idx_rev)//2, len(prot_name_idx_rev)+1)}
-    prot_digest = {pn:prot_seq_peptide[pn] for pn in digest_prot_name}
-    prot_detect = {pn:prot_seq_peptide[pn] for pn in detect_prot_name}
+    detect_prot_name = {prot_name_idx_rev[detect_idx] for detect_idx in range(len(prot_name_idx_rev)//2, len(prot_name_idx_rev))}
+    prot_digest = {pn:dict(prot_seq_peptide[pn]) for pn in digest_prot_name}
+    prot_detect = {pn:dict(prot_seq_peptide[pn]) for pn in detect_prot_name}
     return prot_digest, prot_detect
     
     
@@ -466,10 +485,77 @@ def merge_digestability_detectability(prot_digest: dict, prot_detect: dict) -> d
     '''
     Merging peptide to dataframe
     Input : prot_seq_peptide
-    Output : prot_digest, prot_detect (same with input, just divide)
+    Output : pandas dataframe (peptide, nterm, cterm, miss1, miss2, label columns)
     '''
 
+    for_detect_peptide_dupli = dict()
+    for prot_name, prot_info in prot_detect.items():
+        for pep_set, label in prot_info['labelled_peptides'].items():
+            p, n, c, m1, m2 = pep_set.split()
+            pep_set = (p, n, c, m1, m2)
+            if pep_set not in for_detect_peptide_dupli:
+                for_detect_peptide_dupli[pep_set] = set()
+            for_detect_peptide_dupli[pep_set].add(label)
+    for_detect_peptide = set()
+    for pep_set, labels in for_detect_peptide_dupli.items():
+        label = max(labels)
+        p, n, c, m1, m2 = pep_set
+        for_detect_peptide.add((p, n, c, m1, m2, label))
 
+    for_digest_peptide_dupli = dict()
+    for prot_name, prot_info in prot_digest.items():
+        for pep_set, label in prot_info['labelled_peptides'].items():
+            p, n, c, m1, m2 = pep_set.split()
+            pep_set = (p, n, c, m1, m2)
+            if pep_set not in for_digest_peptide_dupli:
+                for_digest_peptide_dupli[pep_set] = set()
+            for_digest_peptide_dupli[pep_set].add(label)
+    for_digest_peptide = set()
+    for pep_set, labels in for_digest_peptide_dupli.items():
+        label = max(labels)
+        p, n, c, m1, m2 = pep_set
+        for_digest_peptide.add((p, n, c, m1, m2, label))
+
+    df_detect = pd.DataFrame(for_detect_peptide,
+                             columns = ['peptide', 'nterm', 'cterm', 'miss1', 'miss2', 'label'])
+    df_digest = pd.DataFrame(for_digest_peptide,
+                             columns = ['peptide', 'nterm', 'cterm', 'miss1', 'miss2', 'label'])
+    
+    # remove duplicated peptide context
+    df_detect.drop_duplicates(inplace=True, ignore_index=True)
+    df_digest.drop_duplicates(inplace=True, ignore_index=True)
+    df_data = pd.concat([df_detect, df_digest], axis=0).reset_index(drop=True)
+    df_data_key = df_data.drop(['label'], axis=1)
+    detect_idx = set(df_data.iloc[:len(df_detect)].index)
+    digest_idx = set(df_data.iloc[len(df_detect):].index)
+    df_data_key.drop_duplicates(inplace=True, ignore_index=False)
+    remain_idx = set(df_data_key.index)
+    detect_idx = remain_idx.intersection(detect_idx)
+    digest_idx = remain_idx.intersection(digest_idx)
+    df_detect = df_data.loc[detect_idx]
+    df_digest = df_data.loc[digest_idx]
+
+    # divide train test dataset
+    df_test = df_detect.sample(frac = 0.4, random_state = 2022)
+    df_train_detect = df_detect.drop(df_test.index, axis=0)
+    df_train = pd.concat([df_train_detect, df_digest], axis=0).reset_index(drop=True)
+
+    # remove shared peptide in train dataset
+    df_key = pd.DataFrame([[p, True] for p in df_test['peptide'].unique()],
+                          columns = ['peptide', 'drop'])
+    df_train = df_train.merge(df_key, on='peptide', how='left')
+    df_train = df_train.loc[df_train['drop'].isnull()].drop('drop', axis=1).reset_index(drop=True)
+
+    # sampling of negative data
+    positive_tmp = df_test.loc[df_test.label==True]
+    negative_tmp = df_test.loc[df_test.label==False].sample(len(positive_tmp), random_state=2022)
+    df_test_sampled = pd.concat([positive_tmp, negative_tmp] ,axis=0).reset_index(drop=True)
+
+    positive_tmp = df_train.loc[df_train.label==True]
+    negative_tmp = df_train.loc[df_train.label==False].sample(len(positive_tmp), random_state=2022)
+    df_train_sampled = pd.concat([positive_tmp, negative_tmp] ,axis=0).reset_index(drop=True)
+
+    return df_train_sampled, df_test_sampled, df_train, df_test
 
 
 def main():
@@ -516,19 +602,45 @@ def main():
     prot_seq_peptide = get_protein_count(prot_seq_peptide)
     prot_seq_peptide = filter_protein(prot_seq_peptide)
     elapsed_time = int((time.time()-start_time)/60)
-    print(f'### finish Counting and Labelling ... time elapsed {elapsed_time} min \t\t\t')
+    print(f'### finish counting and Labelling ... time elapsed {elapsed_time} min \t\t\t')
 
     # Getting peptides from protein
     print('### Getting peptides from proteins ... \t\t\t', end='\r')
     prot_seq_peptide = get_peptide_from_protein(prot_seq_peptide)
     elapsed_time = int((time.time()-start_time)/60)
-    print(f'### finish Getting and Labelling of peptides ... time elapsed {elapsed_time} min \t\t\t')
+    print(f'### finish getting and labelling of peptides ... time elapsed {elapsed_time} min \t\t\t')
 
     print('### Dividing and Merging for train, val, test ... \t\t\t', end='\r')
     prot_digest, prot_detect = divide_digestability_detectability(prot_seq_peptide)
-    df_peptide = merge_digestability_detectability(prot_digest, prot_detect)
-    df_peptide.to_csv('tmp.csv', index=False)
+    df_train, df_test, df_train_whole, df_test_whole = merge_digestability_detectability(prot_digest, prot_detect)
+    df_train.to_csv('data/train.csv', index=False)
+    df_test.to_csv('data/test.csv', index=False)
+    elapsed_time = int((time.time()-start_time)/60)
+    print(f'### finish merging peptide to train, val, and test dataset ... time elapsed {elapsed_time} min \t\t\t')
+    
+    data_tree = open('data/data.json', 'w')
+    new = dict()
+    for pn, pi in prot_seq_peptide.items():
+        del pi['peptide_tree']
+        new[pn] = pi
+    json.dump(new, data_tree)
+    data_tree.close()
 
+    tmp = open('data/data_digestibility_AP3.json', 'w')
+    new = dict()
+    for pn, pi in prot_digest.items():
+        del pi['peptide_tree']
+        new[pn] = pi
+    json.dump(new, tmp)
+    tmp.close()
+
+    tmp = open('data/data_detectability_AP3.json', 'w')
+    new = dict()
+    for pn, pi in prot_detect.items():
+        del pi['peptide_tree']
+        new[pn] = pi
+    json.dump(new, tmp)
+    tmp.close()
 
 if __name__ == '__main__':
     main()
