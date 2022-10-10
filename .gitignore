@@ -33,6 +33,8 @@ refModel/
 *.json
 *.out
 log/
+Archive/
+RefModel/
 
 # Created by https://www.toptal.com/developers/gitignore/api/jupyternotebooks,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=jupyternotebooks,python

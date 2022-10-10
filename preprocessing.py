@@ -1,10 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """preprocessing.py: Processing of protein-peptide dataset to trainable dataset"""
 
 __author__ = "Juho Son, Seungjin Na, Eunok Paek"
-__copyright__ = "Copyright 2022, The DBDBDeep Project"
+__copyright__ = "Copyright 2022, The DbyDeep Project"
 __credits__ = ["Juho Son", "Seungjin Na", "Eunok Paek"]
 __license__ = "GPL"
 __version__ = "1.0.0"
@@ -16,8 +15,13 @@ __status__ = "Development"
 import time
 import pandas as pd
 import json
-import pickle
 from ahocorapy.keywordtree import KeywordTree
+
+
+class preprocessing():
+    def __init__(self):
+        self.data = ''
+
 
 
 def get_spectral_cnt(data_path: str) -> dict():
