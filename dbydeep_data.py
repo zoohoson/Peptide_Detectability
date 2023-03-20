@@ -24,13 +24,12 @@ warnings.filterwarnings(action='ignore')
 
 class preprocessor():
     def __init__(self):
-        self.training = False
+        pass
 
     def get_protein(self, data_path: str):
         '''
-        Human Uniprot to protein sequence dictionary
-        Input : Human Uniprot (fasta file 30MB)
-            - proteins : 75,074
+        protein database to protein sequence dictionary
+        Input : fasta file
         Output : { protein : sequence } dict
         '''
         prot_seq = dict()  # init
@@ -60,37 +59,11 @@ class preprocessor():
 
     def get_precursor(self, data_path: str, tool_name:str ='mgf'):
         '''
-        Human Spectral Library to identified proteins and precursors dictionary
-        Input : Human Spectral Library (mgf file 8GB)
-            - proteins : 19,611
-            - precursors : 2,154,269 (PK consisting of SEQ and CHARGE)
-            - strip peptides : 1,114,503
+        database search result to identified proteins and precursors dictionary
+        Input : database search result
         Output : prot_precursor { protein : [ (peptide, charge)s ] } dict
         '''
-        file_type = data_path.split('.')[-1]
-        if file_type == 'mgf':
-            prot_precursor = dict()
-            with open(data_path) as f:
-                for line in f:
-                    l = line.replace('\n', '')
-                    # get peptide sequence, protein
-                    if 'CHARGE=' in l:
-                        pep_charge = l.replace('CHARGE=', '')
-                    elif 'SEQ=' in l:
-                        pep_seq = l.replace('SEQ=', '')
-                    elif 'PROTEIN=' in l:
-                        pep_prot_li = l.replace('PROTEIN=', '').split(';')
-                    # record precursor
-                    elif l == 'END IONS':
-                        precursor = (pep_seq, pep_charge)
-                        for pep_prot in pep_prot_li:
-                            if 'XXX' not in pep_prot:  # exclude decoy protein
-                                if pep_prot not in prot_precursor:
-                                    prot_precursor[pep_prot] = set()
-                                prot_precursor[pep_prot].add(precursor)
-            self.prot_precursor = prot_precursor
-        
-        elif tool_name == 'comet':
+        if tool_name == 'comet':
             pattern = r'\[[^]]*\]'
             prot_precursor = dict()
             with open(data_path) as f:
@@ -136,42 +109,6 @@ class preprocessor():
                         prot_precursor[pep_prot].add(precursor)
             self.prot_precursor = prot_precursor
 
-    def get_spectral_cnt(self, data_path: str):
-        """
-        Human Spectral Library(HSL) candidate to precursor count dictionary
-        Input : Human Spectral Library (tsv file 9GB)
-            - precursors : 30,633,841 (including all of HSL)
-            - experiments : 27,992 (by filename. ex.mzXML)
-        Output : precursor_cnt { (peptide, charge) : count } dictionary
-        """
-        self.training = True
-        precursor_cnt = dict()
-        with open(data_path) as f:
-            header = l = f.readline().replace('\n', '').split('\t')
-            header_dic = {col:idx for idx, col in enumerate(header)}
-            '''annotated_peak_count, annotation, augment_task, charge, explained_intensity,
-            extract_task, filename, kl_score, most_similar_score, mz, number_of_ions_anotated_above_SNR,
-            number_of_peaks_within_1_percent_of_max, ppm_error, precursor_intensity,
-            proteosafe_task, scan, score'''
-            
-            while f:
-                l = f.readline().replace('\n', '').split('\t')
-                if l == ['']:
-                    break
-                
-                # get precursor(sequence, charge), filename
-                seq = l[header_dic['annotation']]
-                charge = l[header_dic['charge']]
-                precursor = (seq, charge)
-                filename = l[header_dic['filename']]
-                if precursor not in precursor_cnt:  # init
-                    precursor_cnt[precursor] = set()
-                precursor_cnt[precursor].add(filename)
-            
-            # precursor's spectral count by filename (experimental count)
-            precursor_cnt = {k:len(v) for k, v in precursor_cnt.items()}
-        self.precursor_cnt = precursor_cnt
-
     def merge_precursor_cnt(self):
         '''
         Merge Human Spectral Library(HSL) Candidate to HSL for spectral count per precursor
@@ -180,10 +117,7 @@ class preprocessor():
         '''
         prot_precursor_cnt = dict()
         for prot_name, precursors in self.prot_precursor.items():
-            if self.training:
-                precursors_cnt = [(*precursor, self.precursor_cnt[precursor]) for precursor in precursors]
-            else:
-                precursors_cnt = [(*precursor, 2) for precursor in precursors]  # all peptide has spectral count of 2
+            precursors_cnt = [(*precursor, 2) for precursor in precursors]  # all peptide has spectral count of 2 (for deploy version)
             prot_precursor_cnt[prot_name] = precursors_cnt
         self.prot_precursor = prot_precursor_cnt
 
@@ -250,134 +184,6 @@ class preprocessor():
                 tree.add(peptide)
             tree.finalize()
             self.prot_seq_peptide[prot_name]['peptide_tree'] = tree
-
-    def get_protein_coverage(self):
-        '''
-        Contructing peptide tree
-        Input : prot_seq_peptide
-        Output : prot_seq_peptide { protein : {sequence: ARNDCEQG, 
-                                            peptides: { peptide : count }
-                                            peptide_tree: tree_instance,
-                                            coverage: 0.5
-                                            } 
-                                    }
-        '''
-        for prot_name, prot_info in self.prot_seq_peptide.items():
-            prot_seq = prot_info['sequence']
-            tree = prot_info['peptide_tree']
-
-            prot_coverage = [0 for _ in prot_seq]
-            prot_peptides = tree.search_all(prot_seq)
-            for peptide, START_IDX in prot_peptides:  # result = ('ACAC', 5) = (peptide, location) by ahocorapy
-                for AA_IDX, cnt in enumerate(prot_coverage):
-                    if AA_IDX in range(START_IDX, START_IDX + len(peptide)):
-                        cnt += 1
-                        prot_coverage[AA_IDX] = cnt
-
-            IDENTIFIED_AMINO_ACID_NUM = sum([1 for AA_CNT in prot_coverage if AA_CNT >= 1])
-            PROTEIN_LENGTH = len(prot_seq)
-            COVERAGE = IDENTIFIED_AMINO_ACID_NUM / PROTEIN_LENGTH
-            self.prot_seq_peptide[prot_name]['coverage'] = COVERAGE
-
-    def get_protein_count(self):
-        '''
-        Counting of protein's amino acid with identified peptide's spectral count
-        Input : prot_seq_peptide
-        Output : prot_seq_peptide { protein : {sequence: ARNDCEQG, 
-                                            cleavage_cnt: [1, 0, ..., 4],
-                                            miss_cleavage_cnt: [0, 1, ..., 0],
-                                            peptides: { peptide : count }
-                                            peptide_tree: tree_instance,
-                                            coverage: 0.5
-                                            }
-                                    }
-                                            
-        '''
-        TRYPTIC_SITE = 'KR'
-        for prot_name, prot_info in self.prot_seq_peptide.items():
-            prot_seq = prot_info['sequence']
-            pep_tree = prot_info['peptide_tree']
-            pep_cnt = prot_info['peptides']
-            # counting array init
-            prot_cleavage_cnt = [0 for _ in prot_seq]
-            prot_miss_cleavage_cnt = [0 for _ in prot_seq]
-            
-            prot_peptides = pep_tree.search_all(prot_seq)
-            for peptide, START_IDX in prot_peptides: 
-                SPECTRAL_CNT = pep_cnt[peptide]
-                CLEAVAGE_CNT = sum([1 for amino_acid in peptide[:-1] if amino_acid in TRYPTIC_SITE])  # except C-terminal of peptide
-                # Case of inlcuding missed cleavage sites (__KR__)
-                if CLEAVAGE_CNT >= 1:  
-                    
-                    # Case of that C-terminal of peptide is cleavage site  (__KR__KR)
-                    if peptide[-1] in TRYPTIC_SITE:
-                        # Counting of missed cleavage sites at amino acid level
-                        for AA_IDX, value in enumerate(prot_miss_cleavage_cnt):
-                            if AA_IDX in range(START_IDX, START_IDX + len(peptide) -1):
-                                value += SPECTRAL_CNT
-                                prot_miss_cleavage_cnt[AA_IDX] = value
-                        # Counting of cleavage sites at amino acid level
-                        # only count first and last amino acid of peptide, which include miss cleavage
-                        # last : For counting N-terminal of cleavage site
-                        # first : For counting C-terminal of cleavage site
-                        prot_cleavage_cnt[START_IDX + len(peptide) - 1] += SPECTRAL_CNT
-                        prot_cleavage_cnt[START_IDX] += SPECTRAL_CNT
-                    
-                    # Case of that C-terminal of peptide is not cleavage site (__KR__)
-                    else:
-                        # Counting of missed cleavage sites at amino aicd level
-                        for AA_IDX, value in enumerate(prot_miss_cleavage_cnt):
-                            if AA_IDX in range(START_IDX, START_IDX + len(peptide)):
-                                value += SPECTRAL_CNT
-                                prot_miss_cleavage_cnt[AA_IDX] = value
-                
-                # Case of not including missed cleavage sites
-                else:
-                    # peptide(spectral) count
-                    for AA_IDX, value in enumerate(prot_cleavage_cnt):
-                        if AA_IDX in range(START_IDX, START_IDX + len(peptide)):
-                            value += pep_cnt[peptide]
-                            prot_cleavage_cnt[AA_IDX] = value
-
-            self.prot_seq_peptide[prot_name]['cleavage_cnt'] = prot_cleavage_cnt
-            self.prot_seq_peptide[prot_name]['miss_cleavage_cnt'] = prot_miss_cleavage_cnt
-
-    def filter_protein(self, threshold: float = 0.5) -> dict():
-        '''
-        Filtering of protein which has coverage above 0.5
-        Input : prot_seq_peptide
-        Output : prot_seq_peptide { protein : {sequence: ARNDCEQG, 
-                                            cleavage_cnt: [1, 0, ..., 4],
-                                            miss_cleavage_cnt: [0, 1, ..., 0],
-                                            peptides: { peptide : count }
-                                            peptide_tree: tree_instance,
-                                            coverage: 0.5
-                                            }
-                                    }
-
-        '''
-        filtered_prot_seq_peptide = dict()
-        all_peptides = set()
-        filtered_peptides = set()
-        for prot_name, prot_info in self.prot_seq_peptide.items():
-            ################################### counting for paper
-            for peptide in prot_info['peptides']:
-                all_peptides.add(peptide)
-            ##################################
-            if prot_info['coverage'] >= threshold:
-                filtered_prot_seq_peptide[prot_name] = prot_info
-                ################################### counting for paper
-                for peptide in prot_info['peptides']:
-                    filtered_peptides.add(peptide)
-                ##################################
-        print('##################################')
-        print('# of identified proteins, peptides :', 
-                len(self.prot_seq_peptide), len(all_peptides))
-        print('# of filtered proteins, peptides :', 
-                len(filtered_prot_seq_peptide), len(filtered_peptides))
-        print('##################################')
-        
-        self.prot_seq_peptide = filtered_prot_seq_peptide
 
     def get_peptide_from_protein(self, DIGEST_MERS:int = 7):
         '''
@@ -598,38 +404,8 @@ class preprocessor():
         df_train_sampled = pd.concat([positive_tmp, negative_tmp] ,axis=0).reset_index(drop=True)
         return df_train_sampled, df_test_sampled, df_train, df_test
 
-    def diff_hpp_peptide(self, train, test, data_path: str):
-        '''
-        Differentiate HPP peptides from massIVE-KB peptides
-        Input : HPP peptides
-        Output : massIVE-KB peptide except HPP peptides
-        '''
-        hpp = pd.read_csv(data_path, sep='\t')
-        hpp_pep_seq = set(hpp.Peptide_seq.unique())
-        df_massivekb = pd.concat([train, test], axis=0).reset_index(drop=True)
 
-        train_idx = df_massivekb.iloc[:len(train)].index
-        test_idx = df_massivekb.iloc[len(train):].index
-        df_drop = pd.DataFrame([[p, True] for p in hpp_pep_seq], columns=['peptide', 'drop_flag'])
-        df_massivekb = df_massivekb.merge(df_drop, on='peptide', how='left').fillna(False)
-        df_massivekb = df_massivekb.loc[df_massivekb.drop_flag==False].drop(['drop_flag'], axis=1)
-        massivekb_idx = df_massivekb.index
-        train_idx = set(train_idx).intersection(set(massivekb_idx))
-        test_idx = set(test_idx).intersection(set(massivekb_idx))
-
-        train = df_massivekb.loc[train_idx].reset_index(drop=True)
-        test = df_massivekb.loc[test_idx].reset_index(drop=True)
-        return train, test
-
-
-def main(save_path, protein_path, peptides_path):
-    if len(peptides_path)==3:  # hsl, hsl candi
-        peptide_path, peptide_candi_path, hpp_path = peptides_path
-        training_flag = True
-        tool_name='mgf'
-    else:
-        peptide_path, tool_name = peptides_path
-        training_flag = False
+def main(save_path, protein_path, peptide_path, tool_name):
 
     p = preprocessor()
     start_time = time.time()
@@ -643,8 +419,6 @@ def main(save_path, protein_path, peptides_path):
     # preprocessing of peptide (massIVE-KB)
     print('### get spectral count ...\t\t\t', end='\r')
     p.get_precursor(peptide_path, tool_name)
-    if training_flag:
-        p.get_spectral_cnt(peptide_candi_path)
     p.merge_precursor_cnt()
     elapsed_time = int((time.time()-start_time)/60)
     print(f'### finish getting of precursors ... time elapsed {elapsed_time} min \t\t\t')
@@ -664,10 +438,6 @@ def main(save_path, protein_path, peptides_path):
 
     # Counting spectral count
     print('### Counting of peptide\'s spectral experiments ... \t\t\t', end='\r')
-    if training_flag:
-        p.get_protein_coverage()
-        p.get_protein_count()
-        p.filter_protein()
     elapsed_time = int((time.time()-start_time)/60)
     print(f'### finish counting and Labelling ... time elapsed {elapsed_time} min \t\t\t')
 
@@ -680,77 +450,27 @@ def main(save_path, protein_path, peptides_path):
     print('### Dividing and Merging for train, val, test ... \t\t\t', end='\r')
     p.divide_digestability_detectability()
     df_train, df_test, df_train_whole, df_test_whole = p.merge_digestability_detectability()
-    if training_flag:
-        df_train, df_test = p.diff_hpp_peptide(df_train, df_test, hpp_path)
     elapsed_time = int((time.time()-start_time)/60)
     print(f'### finish merging peptide to train, val, and test dataset ... time elapsed {elapsed_time} min \t\t\t')
     
-    if training_flag:
-        df_train.to_csv(save_path+'train.csv', index=False)
-        df_test.to_csv(save_path+'test.csv', index=False)
-
-        data_tree = open(save_path+'data.json', 'w')
-        new = dict()
-        for pn, pi in p.prot_seq_peptide.items():
-            del pi['peptide_tree']
-            new[pn] = pi
-        json.dump(new, data_tree)
-        data_tree.close()
-
-        tmp = open(save_path+'data_digestibility_AP3.json', 'w')
-        new = dict()
-        for pn, pi in p.prot_digest.items():
-            del pi['peptide_tree']
-            new[pn] = pi
-        json.dump(new, tmp)
-        tmp.close()
-
-        tmp = open(save_path+'data_detectability_AP3.json', 'w')
-        new = dict()
-        for pn, pi in p.prot_detect.items():
-            del pi['peptide_tree']
-            new[pn] = pi
-        json.dump(new, tmp)
-        tmp.close()
-
-    else:
-        pd.concat([df_train_whole, df_test_whole]).to_csv(save_path+'data.csv', index=False)
+    pd.concat([df_train_whole, df_test_whole]).to_csv(save_path+'data.csv', index=False)
 
 
 if __name__ == '__main__':
-    path = '/data/2021_SJH_detectability/data_human/'
-    # [PROTEIN] human uniprot file (uniprot)
-    fasta_fn = 'raw/uniprot-proteome_UP000005640.fasta'
-    # [PEPTIDE] human spectral library file (massIVE-KB)
-    hsl_fn = 'raw/LIBRARY_CREATION_AUGMENT_LIBRARY_TEST-82c0124b-download_filtered_mgf_library-main.mgf'
-    # [PEPTIDE] human spectral library candidate file (massIVE-KB)
-    hslcand_fn = 'raw/LIBRARY_CREATION_AUGMENT_LIBRARY_TEST-82c0124b-candidate_library_spectra-main.tsv'
-    # [PEPTIDE] human spectral library candidate file (massIVE-KB)
-    hpp_fn = 'raw/HPP_validation_peptides.txt'
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--save-path', type=str, default=path, help='save folder path')
+    parser.add_argument('--save-path', type=str, help='save folder path')
     # protein DB
-    parser.add_argument('--protein-fasta', type=str, default=path+fasta_fn, help='fasta. human protein (uniprot) file path')
-    # peptide search result for train (massIVE-KB)
-    parser.add_argument('--peptide-mgf', type=str, default=path+hsl_fn, help='mgf. human spectral library (massIVE-KB) file path')
-    parser.add_argument('--peptide-candi', type=str, default=path+hslcand_fn, help='tsv. human spectral library candidate (massIVE-KB) file path')
-    parser.add_argument('--peptide-hpp', type=str, default=path+hpp_fn, help='txt. Human Proteom Project peptides (HPP) file path')
+    parser.add_argument('--protein-fasta', type=str, help='fasta. human protein (uniprot) file path')
     # peptide search result for test
     parser.add_argument('--peptide-tsv', type=str, help='tsv. peptide search result file path')
     parser.add_argument('--tool-name', type=str, help='tool name')
     opt = parser.parse_args()
     print(opt)
     
-    if opt.tool_name:
-        main(
-            opt.save_path, 
-            opt.protein_fasta, 
-            (opt.peptide_tsv, opt.tool_name)
-            )
-    else:
-        main(
-            opt.save_path, 
-            opt.protein_fasta, 
-            (opt.peptide_mgf, opt.peptide_candi, opt.peptide_hpp)
-            )
+    main(
+        opt.save_path, 
+        opt.protein_fasta, 
+        opt.peptide_tsv, 
+        opt.tool_name
+        )
