@@ -4,4 +4,4 @@ nohup python ../dbydeep_model.py \
     --model-path /home/bis/2021_SJH_detectability/DbyDeep/log/model_DbyDeep_04_False.h5 \
     --save-path ../data/ \
     --job-name DbyDeep_retrained \
-     >../revision/log/result_prediction_gru.out &
+     >../../revision/log/result_prediction_gru.out &
