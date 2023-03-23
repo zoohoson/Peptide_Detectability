@@ -182,7 +182,7 @@ def main(train_file_path, version):
                         validation_data=([pep_val], label_val),
                         callbacks=[es, cp],
                         )
-    model.save("log/model_DbyDeep_{version}_endpoint.h5")
+    model.save(f"log/model_DbyDeep_{version}_endpoint.h5")
 
     np.save(f'log/log_DbyDeep_history_{version}.npy', history.history)
     plt.figure(figsize=(16,2))
