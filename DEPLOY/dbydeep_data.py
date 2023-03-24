@@ -459,7 +459,7 @@ def main(save_path, protein_path, peptide_path, tool_name):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--save-path', type=str, help='save folder path')
+    parser.add_argument('--save-path', default='./data/', type=str, help='save folder path')
     # protein DB
     parser.add_argument('--protein-fasta', type=str, help='fasta. human protein (uniprot) file path')
     # peptide search result for test

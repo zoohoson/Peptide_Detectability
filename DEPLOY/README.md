@@ -1,44 +1,73 @@
 # DbyDeep
 DbyDeep: Exploration of MS detectable peptides via deep learning [AnalyChem 2023]  
 
+
 ## Hardware
 DbyDeep requires  
 * a GPU with CUDA support
 
+
 ## Installation
-Prosit requires
+DbyDeep requires GPU setting and conda environment.  
+1. GPU setting for using tensorflow  
+DbyDeep was tested on Ubuntu 18.04, CUDA 11.1, CUDNN 8.0.5 with Nvidia RTX 8000 and RTX A6000 graphic cards with the dependencies above.
+> nvidia GPU driver (https://www.nvidia.co.kr/Download/Find.aspx)  
+CUDA >= 11.0  (https://developer.nvidia.com/cuda-toolkit-archive)
+cudnn >= 8.0  (https://developer.nvidia.com/rdp/cudnn-download)
+https://www.tensorflow.org/install/source#linux
 
+2. conda environment.  
+tensorflow = 2.4.0  
+python >=3.6, <=3.8  
+> conda env create -f environment.yml  
 
-
-Prosit was tested on Ubuntu 16.04, CUDA 8.0, CUDNN 6 with Nvidia Tesla K40c and Titan Xp graphic cards with the dependencies above.
-
-The time installation takes is dependent on your download speed (Prosit downloads a 3GB docker container). In our tests installation time is ~5 minutes.
 
 ## Model
-Prosit assumes your models are in directories that look like this:
-
-model.yml - a saved keras model
-config.yml - a model specifying names of inputs and outputs of the model
-weights file(s) - that follow the template weights_{epoch}_{loss}.hdf5
+DbyDeep assumes your models are in directories that look like this:
+> DbyDeep.h5 - a saved keras model and weights  
 
 
 ## Usage
-The following command will load your model from /path/to/model/. In the example GPU device 0 is used for computation. The default PORT is 5000.
+1. dataset  
+use ./scripts/dataset.sh file or python script.  
+Currently two output formats are supported: a COMET style db_result.tsv and a MSGF+ style db_result.tsv file.
+> bash dataset.sh  
 
-make server MODEL_SPECTRA=/path/to/fragmentation_model/ MODEL_IRT=/path/to/irt_model/
-Currently two output formats are supported: a MaxQuant style msms.txt not including the iRT value and a generic text file (that works with Spectronaut)
+> python dbydeep_data.py \
+    --save-path /path/to/save/ \
+    --protein-fasta /path/to/proteinDB/ \
+    --peptide-tsv /path/to/SearchResult/ \
+    --tool-name msgfplus  # [msgfplus, comet]
+
+2. prediction  
+use ./scripts/model.sh file or python script.  
+> bash model.sh
+
+> python dbydeep_model.py \
+    --retrain-flag False \
+    --data-path ./data/data.csv \
+    --model-path ./data/DbyDeep.h5 \
+    --save-path ./data/ \
+    --job-name data_result
+
+3. Using DbyDeep on your data  
+You can retrain DbyDeep model to your own needs.  
+> python dbydeep_model.py \
+    --retrain-flag True \
+    --data-path ./data/data.csv \
+    --model-path ./data/DbyDeep.h5 \
+    --save-path ./data/ \
+    --job-name data_result
+
+Please note: Sequences except 20 amino acids are not supported. Modifications are not supported.  
+
 
 ## Example
-Please find an example input file at example/peptidelist.csv. After starting the server you can run the following commands, depending on what output format you prefer:
+Please find an example input file at ./data/test.csv.
 
-curl -F "peptides=@examples/peptidelist.csv" http://127.0.0.1:5000/predict/generic
-
-curl -F "peptides=@examples/peptidelist.csv" http://127.0.0.1:5000/predict/msp
-
-curl -F "peptides=@examples/peptidelist.csv" http://127.0.0.1:5000/predict/msms
-The examples take about 4s to run. Expected output files (.generic, .msp and .msms) can be found in examples/.
-
-## Using DbyDeep on your data
-You can adjust the example above to your own needs. Send any list of (Peptide, Precursor charge, Collision energy) in the format of /example/peptidelist.csv to a running instance of the Prosit server.
-
-Please note: Sequences with amino acid U, O, or X are not supported. Modifications except "M(ox)" are not supported. Each C is treated as Cysteine with carbamidomethylation (fixed modification in MaxQuant).
+> python dbydeep_model.py \
+    --retrain-flag False \
+    --data-path ./data/test.csv \
+    --model-path ./data/DbyDeep.h5 \
+    --save-path ./data/ \
+    --job-name test_result
