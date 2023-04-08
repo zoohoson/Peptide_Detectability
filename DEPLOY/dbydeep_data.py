@@ -1,17 +1,3 @@
-# -*- coding: utf-8 -*-
-
-"""preprocessing.py: Processing of protein-peptide dataset to trainable dataset"""
-
-__author__ = "Juho Son, Seungjin Na, Eunok Paek"
-__copyright__ = "Copyright 2022, DbyDeep"
-__credits__ = ["Juho Son", "Seungjin Na", "Eunok Paek"]
-__license__ = "GPL"
-__version__ = "1.0.0"
-__maintainer__ = "Juho Son"
-__email__ = "juho8563@hanyang.ac.kr"
-__status__ = "Development"
-
-
 import time
 import pandas as pd
 import json

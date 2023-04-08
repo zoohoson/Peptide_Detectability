@@ -3,15 +3,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 import pandas as pd
 import tensorflow as tf
 import os
-os.environ["CUDA_VISIBLE_DEVICES"]="0"  # 2. RTX A6000
-# gpu setting
-gpus = tf.config.experimental.list_physical_devices('GPU')
-if gpus:
-    try:
-        tf.config.experimental.set_virtual_device_configuration(gpus[0],
-        [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=1024*4)])
-    except RuntimeError as e:
-        print(e)
+
 from sklearn.model_selection import train_test_split
 import numpy as np
 import argparse

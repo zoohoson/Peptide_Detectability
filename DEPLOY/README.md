@@ -1,5 +1,5 @@
 # DbyDeep
-DbyDeep: Exploration of MS detectable peptides via deep learning [AnalyChem 2023]  
+DbyDeep: Exploration of MS detectable peptides via deep learning  
 
 
 ## Hardware
